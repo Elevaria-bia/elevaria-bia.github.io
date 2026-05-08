@@ -1,0 +1,224 @@
+{
+  "name": "GIRO — Inteligência de Estoque v1.0",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Segunda-feira 8h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "giro-analise",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Manual",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 480],
+      "notes": "Use este nó para disparo manual ou integração com formulário web"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $vars.GIRO_SHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Estoque",
+          "mode": "name"
+        },
+        "options": {
+          "headerRow": 1
+        }
+      },
+      "id": "read-sheet",
+      "name": "Ler Planilha de Estoque",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [500, 380],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-cred",
+          "name": "Google Sheets"
+        }
+      },
+      "notes": "Configure: GIRO_SHEET_ID nas variáveis do workflow. Colunas esperadas: produto, sku, estoque_atual, estoque_minimo, preco_custo, preco_venda, vendas_30d, vendas_90d, ultima_venda"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// GIRO — Motor de Inteligência de Estoque\n// Versão: 1.0 | ELEVARIA\n// ============================================================\n\nconst items = $input.all();\nconst produtos = items.map(i => i.json);\n\n// --- Helpers ---\nconst hoje = new Date();\n\nfunction diasSemVenda(ultimaVenda) {\n  if (!ultimaVenda) return 999;\n  const d = new Date(ultimaVenda);\n  return Math.floor((hoje - d) / (1000 * 60 * 60 * 24));\n}\n\nfunction coberturaDias(estoqueAtual, vendas30d) {\n  if (!vendas30d || vendas30d == 0) return 999;\n  const vendasDia = vendas30d / 30;\n  return Math.round(estoqueAtual / vendasDia);\n}\n\nfunction giroMensal(vendas30d, estoqueAtual) {\n  if (!estoqueAtual || estoqueAtual == 0) return 0;\n  return parseFloat((vendas30d / estoqueAtual).toFixed(2));\n}\n\n// --- Processar cada produto ---\nconst processados = produtos.map(p => {\n  const estoque = parseFloat(p.estoque_atual) || 0;\n  const estoqueMin = parseFloat(p.estoque_minimo) || 0;\n  const v30 = parseFloat(p.vendas_30d) || 0;\n  const v90 = parseFloat(p.vendas_90d) || 0;\n  const custo = parseFloat(p.preco_custo) || 0;\n  const venda = parseFloat(p.preco_venda) || 0;\n  const margem = venda > 0 ? ((venda - custo) / venda * 100) : 0;\n  const faturamento30d = v30 * venda;\n  const cobertura = coberturaDias(estoque, v30);\n  const giro = giroMensal(v30, estoque);\n  const diasSemMov = diasSemVenda(p.ultima_venda);\n  const capitalParado = estoque * custo;\n\n  // Classificação de status\n  let status = 'normal';\n  let alerta = null;\n\n  if (estoque === 0 && v30 > 0) {\n    status = 'ruptura';\n    alerta = 'RUPTURA — produto sem estoque com demanda ativa';\n  } else if (estoque > 0 && estoque < estoqueMin) {\n    status = 'critico';\n    alerta = `ESTOQUE CRÍTICO — abaixo do mínimo (${estoque} / mín. ${estoqueMin})`;\n  } else if (diasSemMov > 90 && estoque > 0) {\n    status = 'parado';\n    alerta = `ESTOQUE PARADO — ${diasSemMov} dias sem venda`;\n  } else if (cobertura > 120) {\n    status = 'excesso';\n    alerta = `EXCESSO — cobertura de ${cobertura} dias (mais de 4 meses)`;\n  } else if (cobertura < 15 && v30 > 0) {\n    status = 'reposicao';\n    alerta = `REPOSIÇÃO URGENTE — apenas ${cobertura} dias de estoque`;\n  }\n\n  return {\n    produto: p.produto,\n    sku: p.sku || '-',\n    estoque,\n    estoqueMin,\n    v30,\n    v90,\n    custo,\n    venda,\n    margem: margem.toFixed(1),\n    faturamento30d: faturamento30d.toFixed(2),\n    cobertura,\n    giro,\n    diasSemMov,\n    capitalParado: capitalParado.toFixed(2),\n    status,\n    alerta\n  };\n});\n\n// --- Curva ABC por faturamento ---\nconst totalFaturamento = processados.reduce((s, p) => s + parseFloat(p.faturamento30d), 0);\nconst ordenadoPorFat = [...processados].sort((a, b) => parseFloat(b.faturamento30d) - parseFloat(a.faturamento30d));\nlet acum = 0;\nordenadoPorFat.forEach(p => {\n  acum += parseFloat(p.faturamento30d);\n  const pct = totalFaturamento > 0 ? (acum / totalFaturamento * 100) : 0;\n  p.curvaABC = pct <= 70 ? 'A' : pct <= 90 ? 'B' : 'C';\n});\n\n// Voltar classificação ABC ao array processados\nprocessados.forEach(p => {\n  const enc = ordenadoPorFat.find(x => x.sku === p.sku && x.produto === p.produto);\n  if (enc) p.curvaABC = enc.curvaABC;\n});\n\n// --- Resumo executivo ---\nconst totalProdutos = processados.length;\nconst rupturas = processados.filter(p => p.status === 'ruptura');\nconst criticos = processados.filter(p => p.status === 'critico');\nconst parados = processados.filter(p => p.status === 'parado');\nconst excessos = processados.filter(p => p.status === 'excesso');\nconst reposicoes = processados.filter(p => p.status === 'reposicao');\nconst curvaA = processados.filter(p => p.curvaABC === 'A');\n\nconst totalCapitalParado = parados.reduce((s, p) => s + parseFloat(p.capitalParado), 0);\nconst totalFat30 = processados.reduce((s, p) => s + parseFloat(p.faturamento30d), 0);\n\nconst resumo = {\n  totalProdutos,\n  totalFaturamento30d: totalFat30.toFixed(2),\n  totalCapitalParado: totalCapitalParado.toFixed(2),\n  qtdRupturas: rupturas.length,\n  qtdCriticos: criticos.length,\n  qtdParados: parados.length,\n  qtdExcessos: excessos.length,\n  qtdReposicoes: reposicoes.length,\n  qtdCurvaA: curvaA.length,\n  produtosParados: parados.slice(0, 5).map(p => p.produto),\n  produtosRuptura: rupturas.map(p => p.produto),\n  produtosCriticos: criticos.slice(0, 5).map(p => `${p.produto} (${p.estoque} un)`),\n  topCurvaA: curvaA.slice(0, 5).map(p => p.produto),\n  dataAnalise: hoje.toLocaleDateString('pt-BR')\n};\n\n// --- Output ---\nreturn [{\n  json: {\n    resumo,\n    produtos: processados,\n    alertas: processados.filter(p => p.alerta).map(p => ({ produto: p.produto, alerta: p.alerta, status: p.status }))\n  }\n}];"
+      },
+      "id": "calcular-kpis",
+      "name": "Calcular KPIs de Estoque",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [760, 380]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $vars.ANTHROPIC_API_KEY }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "model": "claude-haiku-4-5-20251001",
+          "max_tokens": 1024,
+          "messages": [
+            {
+              "role": "user",
+              "content": "=Você é um consultor de gestão de estoque especialista em varejo brasileiro. Analise os dados abaixo e gere um relatório OBJETIVO e ACIONÁVEL para o empresário. Use linguagem direta, sem jargão. Seja específico com nomes de produtos.\n\n📊 RESUMO DO ESTOQUE — {{ $json.resumo.dataAnalise }}\nTotal de produtos: {{ $json.resumo.totalProdutos }}\nFaturamento 30 dias: R$ {{ $json.resumo.totalFaturamento30d }}\nCapital parado em produtos sem giro: R$ {{ $json.resumo.totalCapitalParado }}\n\n🚨 ALERTAS CRÍTICOS:\nRupturas (sem estoque + demanda): {{ $json.resumo.qtdRupturas }} produtos — {{ $json.resumo.produtosRuptura.join(', ') || 'nenhum' }}\nEstoque crítico (abaixo do mínimo): {{ $json.resumo.qtdCriticos }} produtos — {{ $json.resumo.produtosCriticos.join(', ') || 'nenhum' }}\nReposição urgente (<15 dias): {{ $json.resumo.qtdReposicoes }} produtos\n\n📦 OPORTUNIDADES:\nProdutos parados (+90 dias sem venda): {{ $json.resumo.qtdParados }} — {{ $json.resumo.produtosParados.join(', ') || 'nenhum' }}\nExcesso de estoque (+120 dias cobertura): {{ $json.resumo.qtdExcessos }} produtos\n\n⭐ CURVA A (70% do faturamento): {{ $json.resumo.qtdCurvaA }} produtos — {{ $json.resumo.topCurvaA.join(', ') }}\n\nGere um relatório em 3 seções:\n1. AÇÃO IMEDIATA (o que fazer HOJE)\n2. ESTA SEMANA (o que organizar nos próximos 7 dias)\n3. OPORTUNIDADE (como recuperar capital ou aumentar vendas)\n\nMáximo 300 palavras. Tom: direto, como um sócio experiente. Sem markdown excessivo."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "analise-ia",
+      "name": "Análise IA (Claude)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1020, 380]
+    },
+    {
+      "parameters": {
+        "jsCode": "const kpis = $('Calcular KPIs de Estoque').first().json;\nconst iaResponse = $input.first().json;\n\n// Extrair texto da resposta da IA\nconst analise = iaResponse.content?.[0]?.text || 'Análise não disponível.';\nconst resumo = kpis.resumo;\n\n// ---- Montar mensagem WhatsApp ----\nconst linhaRuptura = resumo.qtdRupturas > 0\n  ? `🔴 *Ruptura de estoque:* ${resumo.qtdRupturas} produto(s) sem estoque\\n`\n  : '';\n\nconst linhaCritico = resumo.qtdCriticos > 0\n  ? `🟠 *Estoque crítico:* ${resumo.qtdCriticos} produto(s) abaixo do mínimo\\n`\n  : '';\n\nconst linhaParado = resumo.qtdParados > 0\n  ? `🟡 *Capital parado:* ${resumo.qtdParados} produto(s) sem giro — R$ ${parseFloat(resumo.totalCapitalParado).toLocaleString('pt-BR', {minimumFractionDigits: 2})} imobilizados\\n`\n  : '';\n\nconst mensagem = `🔄 *GIRO — Relatório de Estoque*\n📅 ${resumo.dataAnalise}\n\n━━━━━━━━━━━━━━━━━━━━\n📊 *PAINEL RÁPIDO*\n\nProdutos analisados: ${resumo.totalProdutos}\nFaturamento (30 dias): R$ ${parseFloat(resumo.totalFaturamento30d).toLocaleString('pt-BR', {minimumFractionDigits: 2})}\n\n${linhaRuptura}${linhaCritico}${linhaParado}\n━━━━━━━━━━━━━━━━━━━━\n🤖 *ANÁLISE E RECOMENDAÇÕES*\n\n${analise}\n\n━━━━━━━━━━━━━━━━━━━━\n_Relatório gerado automaticamente pelo GIRO_\n_Dúvidas? Fale com a ELEVARIA_`;\n\nreturn [{ json: { mensagem, resumo } }];"
+      },
+      "id": "formatar-mensagem",
+      "name": "Formatar Mensagem WhatsApp",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1280, 380]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.EVOLUTION_URL }}/message/sendText/{{ $vars.EVOLUTION_INSTANCE }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $vars.EVOLUTION_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "number": "={{ $vars.WHATSAPP_DESTINO }}",
+          "text": "={{ $json.mensagem }}",
+          "delay": 1200
+        },
+        "options": {}
+      },
+      "id": "enviar-whatsapp",
+      "name": "Enviar WhatsApp (Evolution API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1540, 300],
+      "notes": "Configure as variáveis: EVOLUTION_URL, EVOLUTION_INSTANCE, EVOLUTION_API_KEY, WHATSAPP_DESTINO"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.z-api.io/instances/{{ $vars.ZAPI_INSTANCE }}/token/{{ $vars.ZAPI_TOKEN }}/send-text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Client-Token",
+              "value": "={{ $vars.ZAPI_CLIENT_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "phone": "={{ $vars.WHATSAPP_DESTINO }}",
+          "message": "={{ $json.mensagem }}"
+        },
+        "options": {}
+      },
+      "id": "enviar-zapi",
+      "name": "Enviar WhatsApp (Z-API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1540, 460],
+      "notes": "Alternativa ao Evolution API. Configure: ZAPI_INSTANCE, ZAPI_TOKEN, ZAPI_CLIENT_TOKEN"
+    }
+  ],
+  "connections": {
+    "Segunda-feira 8h": {
+      "main": [[{ "node": "Ler Planilha de Estoque", "type": "main", "index": 0 }]]
+    },
+    "Webhook Manual": {
+      "main": [[{ "node": "Ler Planilha de Estoque", "type": "main", "index": 0 }]]
+    },
+    "Ler Planilha de Estoque": {
+      "main": [[{ "node": "Calcular KPIs de Estoque", "type": "main", "index": 0 }]]
+    },
+    "Calcular KPIs de Estoque": {
+      "main": [[{ "node": "Análise IA (Claude)", "type": "main", "index": 0 }]]
+    },
+    "Análise IA (Claude)": {
+      "main": [[{ "node": "Formatar Mensagem WhatsApp", "type": "main", "index": 0 }]]
+    },
+    "Formatar Mensagem WhatsApp": {
+      "main": [
+        [{ "node": "Enviar WhatsApp (Evolution API)", "type": "main", "index": 0 }],
+        [{ "node": "Enviar WhatsApp (Z-API)", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "meta": {
+    "instanceId": "elevaria-giro-v1"
+  },
+  "tags": ["GIRO", "ELEVARIA", "estoque", "varejo"],
+  "pinData": {},
+  "versionId": "1.0.0",
+  "notes": "# GIRO — Variáveis necessárias (Settings > Variables)\n\nGIRO_SHEET_ID: ID da planilha Google Sheets do cliente\nANTHROPIC_API_KEY: Chave da API da Anthropic (Claude)\nEVOLUTION_URL: URL do servidor Evolution API (ex: https://evo.seudominio.com.br)\nEVOLUTION_INSTANCE: Nome da instância Evolution API\nEVOLUTION_API_KEY: Chave da Evolution API\nWHATSAPP_DESTINO: Número do gestor (55119XXXXXXXX)\n\n# Colunas esperadas na planilha\nproduto | sku | estoque_atual | estoque_minimo | preco_custo | preco_venda | vendas_30d | vendas_90d | ultima_venda (DD/MM/AAAA)"
+}
