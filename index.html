@@ -205,8 +205,99 @@
     }
     .nav-links a:hover { color: var(--white); }
 
+    /* Hamburger button */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0.4rem;
+      z-index: 200;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.28s ease, opacity 0.28s ease;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile menu overlay */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-menu a {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-menu .mobile-cta {
+      margin-top: 1rem;
+    }
+
     @media (max-width: 820px) {
       .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      nav .btn { display: none; }
+    }
+
+    /* Hero stats mobile strip */
+    .hero-stats-mobile {
+      display: none;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stats-mobile .stat-item { text-align: left; }
+    .hero-stats-mobile .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+      display: block;
+      line-height: 1;
+    }
+    .hero-stats-mobile .stat-number span { color: var(--gold); }
+    .hero-stats-mobile .stat-label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 0.35rem;
+    }
+    @media (max-width: 900px) {
+      .hero-stats-mobile { display: flex; }
     }
 
     /* ─── HERO ─── */
@@ -284,7 +375,7 @@
 
     .hero-stats {
       position: absolute;
-      right: 0;
+      right: clamp(1.5rem, 5vw, 4rem);
       top: 50%;
       transform: translateY(-50%);
       z-index: 2;
@@ -831,6 +922,16 @@
 
 <body>
 
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#manifesto" onclick="closeMobileMenu()">Sobre</a>
+    <a href="#produtos" onclick="closeMobileMenu()">Produtos</a>
+    <a href="#consultoria" onclick="closeMobileMenu()">Consultoria</a>
+    <a href="#processo" onclick="closeMobileMenu()">Processo</a>
+    <a href="#contato" onclick="closeMobileMenu()">Contato</a>
+    <a href="https://wa.me/5500000000000" target="_blank" rel="noopener" class="btn btn-primary mobile-cta" onclick="closeMobileMenu()">Fale Conosco</a>
+  </div>
+
   <!-- NAV -->
   <nav id="navbar">
     <div class="container nav-inner">
@@ -845,6 +946,9 @@
       <a href="https://wa.me/5500000000000" target="_blank" rel="noopener" class="btn btn-primary">
         Fale Conosco
       </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
@@ -867,6 +971,22 @@
         <div class="hero-ctas fade-in delay-3">
           <a href="#produtos" class="btn btn-primary">Ver Nossos Produtos</a>
           <a href="https://wa.me/5500000000000" target="_blank" rel="noopener" class="btn btn-outline">WhatsApp</a>
+        </div>
+
+        <!-- Stats strip — mobile only -->
+        <div class="hero-stats-mobile fade-in delay-4">
+          <div class="stat-item">
+            <span class="stat-number">4<span>+</span></span>
+            <div class="stat-label">Produtos</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">24<span>h</span></span>
+            <div class="stat-label">Disponibilidade</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100<span>%</span></span>
+            <div class="stat-label">Resultado real</div>
+          </div>
         </div>
       </div>
 
@@ -1118,121 +1238,4 @@
     <div class="container">
       <div class="contato-grid">
 
-        <div class="contato-left fade-in">
-          <div class="section-label">Contato</div>
-          <h2>Tem um projeto em mente? Fale com a gente agora.</h2>
-          <p>Sem formulário burocrático. Uma conversa honesta sobre o que você precisa é o suficiente para começar.</p>
-          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener" class="btn btn-primary" style="padding: 1.1rem 2.25rem; font-size:0.85rem;">
-            Conversar no WhatsApp
-          </a>
-          <div class="contact-divider"></div>
-          <div class="contact-email">
-            <div class="contact-dot"></div>
-            <span>fabianagrigorio.tech@gmail.com</span>
-          </div>
-        </div>
-
-        <div class="fade-in delay-2">
-          <form
-            class="contato-form"
-            action="mailto:fabianagrigorio.tech@gmail.com"
-            method="POST"
-            enctype="text/plain"
-          >
-            <div class="form-field">
-              <label for="nome">Nome</label>
-              <input
-                type="text"
-                id="nome"
-                name="Nome"
-                placeholder="Seu nome completo"
-                required
-              />
-            </div>
-            <div class="form-field">
-              <label for="empresa">Empresa / Segmento</label>
-              <input
-                type="text"
-                id="empresa"
-                name="Empresa"
-                placeholder="Ex: loja de calçados, clínica, distribuidora..."
-              />
-            </div>
-            <div class="form-field">
-              <label for="necessidade">Sua necessidade</label>
-              <textarea
-                id="necessidade"
-                name="Necessidade"
-                placeholder="Descreva brevemente o problema que você quer resolver..."
-                rows="5"
-              ></textarea>
-            </div>
-            <button type="submit" class="btn btn-gold" style="align-self: flex-start;">
-              Enviar mensagem
-            </button>
-            <p class="form-note">Respondemos em até 24 horas.</p>
-          </form>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <div>
-          <div class="footer-logo">ELEV<span>A</span>RIA</div>
-          <div class="footer-tagline">Construído com IA. Entregue com propósito.</div>
-        </div>
-        <div class="footer-copy">
-          &copy; 2026 ELEVARIA &mdash; Todos os direitos reservados
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Navbar scroll
-    const navbar = document.getElementById('navbar');
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      if (y > 60) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-      lastScroll = y;
-    }, { passive: true });
-
-    // Intersection Observer — fade-in
-    const fadeEls = document.querySelectorAll('.fade-in');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    fadeEls.forEach(el => io.observe(el));
-
-    // Smooth anchor scroll (offset for fixed nav)
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', function(e) {
-        const id = this.getAttribute('href');
-        const target = document.querySelector(id);
-        if (target) {
-          e.preventDefault();
-          const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
-      });
-    });
-  </script>
-
-</body>
-</html>
+        <div class="contato-left fade-i
