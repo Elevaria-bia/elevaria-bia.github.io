@@ -306,8 +306,9 @@
       display: flex;
       align-items: center;
       position: relative;
-      overflow: hidden;
+      overflow: clip;
       padding-top: 80px;
+      padding-bottom: 80px;
     }
 
     .hero-bg {
@@ -381,14 +382,16 @@
       z-index: 2;
       display: flex;
       flex-direction: column;
-      gap: 2.5rem;
+      gap: 1.5rem;
+      max-height: calc(100vh - 200px);
+      overflow: visible;
     }
 
     .stat-item { text-align: right; }
 
     .stat-number {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
       font-weight: 700;
       color: var(--white);
       display: block;
@@ -1371,11 +1374,4 @@
           closeMobileMenu();
           const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
           window.scrollTo({ top, behavior: 'smooth' });
-        }
-      });
-    });
-  </script>
-
-</body>
-</html>
-                                       
+    
