@@ -1,90 +1,130 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>GIRO — Demo Interativa</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root{--bg:#0A0A0A;--bg-card:#141414;--bg-input:#1a1a1a;--green:#3D5A3A;--green-light:#4a6e47;--accent:#E87B6A;--gold:#C4A87A;--white:#F5F5F0;--gray:#888;--gray-light:#aaa;--border:rgba(196,168,122,0.12);--red:#e05c5c;--orange:#e09a5c;--yellow:#c4a83a;--blue:#5c8fe0;--purple:#9b6ed8;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
-    nav{background:rgba(10,10,10,0.95);border-bottom:1px solid var(--border);padding:1rem 0;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);}
+    nav{background:rgba(10,10,10,.95);border-bottom:1px solid var(--border);padding:1rem 0;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);}
     .nav-inner{max-width:1180px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;}
-    .brand{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;letter-spacing:0.1em;}
+    .brand{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;letter-spacing:.1em;}
     .brand span{color:var(--gold);}
-    .demo-badge{font-size:0.62rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(232,123,106,0.35);padding:.25rem .7rem;border-radius:2px;}
+    .demo-badge{font-size:.62rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(232,123,106,.35);padding:.25rem .7rem;border-radius:2px;}
     .nav-back{font-size:.75rem;color:var(--gray);text-decoration:none;transition:color .2s;}
     .nav-back:hover{color:var(--white);}
-    .hero-demo{text-align:center;padding:3.5rem 2rem 2.5rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(61,90,58,.06) 0%,transparent 100%);}
-    .hero-demo h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;margin-bottom:.75rem;}
+    .hero-demo{text-align:center;padding:3rem 2rem 2rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(61,90,58,.06) 0%,transparent 100%);}
+    .hero-demo h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:700;margin-bottom:.6rem;}
     .hero-demo h1 em{font-style:italic;color:var(--gold);}
-    .hero-demo p{color:var(--gray-light);font-size:1rem;font-weight:300;max-width:580px;margin:0 auto 1.5rem;line-height:1.7;}
-    .v2-pill{display:inline-flex;align-items:center;background:rgba(196,168,122,.1);border:1px solid rgba(196,168,122,.25);border-radius:2px;padding:.2rem .75rem;font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+    .hero-demo p{color:var(--gray-light);font-size:.95rem;font-weight:300;max-width:560px;margin:0 auto 1.2rem;line-height:1.7;}
+    .v2-pill{display:inline-flex;align-items:center;background:rgba(196,168,122,.1);border:1px solid rgba(196,168,122,.25);border-radius:2px;padding:.2rem .75rem;font-size:.6rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;}
     .steps-hint{display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;}
-    .step-hint{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--gray);}
-    .step-hint .num{width:20px;height:20px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;}
-    .step-sep{color:var(--border);font-size:1.2rem;}
-    .main{max-width:1180px;margin:0 auto;padding:2.5rem 2rem 5rem;display:grid;grid-template-columns:1fr 380px;gap:2rem;align-items:start;}
+    .step-hint{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--gray);}
+    .step-hint .num{width:20px;height:20px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;}
+    .step-sep{color:var(--border);font-size:1.1rem;}
+    /* SEGMENT SELECTOR */
+    .seg-bar{background:rgba(255,255,255,.02);border-bottom:1px solid var(--border);padding:.9rem 2rem;}
+    .seg-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+    .seg-label{font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);white-space:nowrap;flex-shrink:0;}
+    .seg-pills{display:flex;gap:.5rem;flex-wrap:wrap;}
+    .seg-pill{font-size:.72rem;font-weight:500;padding:.3rem .85rem;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:var(--gray-light);cursor:pointer;transition:all .18s;background:none;}
+    .seg-pill:hover{border-color:rgba(196,168,122,.4);color:var(--gold);}
+    .seg-pill.ativo{background:rgba(61,90,58,.2);border-color:rgba(61,90,58,.5);color:#7bbf78;font-weight:600;}
+    /* LAYOUT */
+    .main{max-width:1180px;margin:0 auto;padding:2rem 2rem 5rem;display:grid;grid-template-columns:1fr 380px;gap:2rem;align-items:start;}
     @media(max-width:960px){.main{grid-template-columns:1fr;}}
     .left-col,.right-col{display:flex;flex-direction:column;gap:1.25rem;}
     .panel{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
-    .panel-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;}
-    .panel-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;}
-    .panel-sub{font-size:.75rem;color:var(--gray);font-weight:300;}
-    .panel-tag{font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.2rem .5rem;border-radius:2px;background:rgba(61,90,58,.2);color:#7bbf78;}
+    .panel-header{padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem;}
+    .panel-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;}
+    .panel-sub{font-size:.72rem;color:var(--gray);font-weight:300;}
+    .panel-tag{font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:.18rem .45rem;border-radius:2px;background:rgba(61,90,58,.2);color:#7bbf78;}
     .table-wrap{overflow-x:auto;}
-    table{width:100%;border-collapse:collapse;font-size:.8rem;}
+    table{width:100%;border-collapse:collapse;font-size:.78rem;}
     thead tr{background:rgba(255,255,255,.03);}
-    th{padding:.65rem .6rem;text-align:left;font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);white-space:nowrap;border-bottom:1px solid var(--border);}
-    td{padding:.5rem .6rem;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;}
+    th{padding:.6rem .55rem;text-align:left;font-size:.58rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);white-space:nowrap;border-bottom:1px solid var(--border);}
+    td{padding:.45rem .55rem;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;}
     tr:last-child td{border-bottom:none;}
     tr:hover td{background:rgba(255,255,255,.015);}
-    td input{background:var(--bg-input);border:1px solid rgba(255,255,255,.06);border-radius:3px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.8rem;padding:.28rem .45rem;width:100%;min-width:58px;outline:none;transition:border-color .2s;}
+    td input{background:var(--bg-input);border:1px solid rgba(255,255,255,.06);border-radius:3px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.78rem;padding:.26rem .42rem;width:100%;min-width:55px;outline:none;transition:border-color .2s;}
     td input:focus{border-color:rgba(196,168,122,.45);}
-    td input[type="text"]{min-width:100px;}
-    td input[type="date"]{min-width:118px;color-scheme:dark;}
-    .abc-badge{font-size:.62rem;font-weight:700;padding:.2rem .48rem;border-radius:2px;letter-spacing:.08em;}
+    td input[type="text"]{min-width:96px;}
+    td input[type="date"]{min-width:114px;color-scheme:dark;}
+    .abc-badge{font-size:.6rem;font-weight:700;padding:.18rem .44rem;border-radius:2px;letter-spacing:.07em;}
     .abc-a{background:rgba(61,90,58,.25);color:#7bbf78;}
     .abc-b{background:rgba(196,168,122,.15);color:var(--gold);}
     .abc-c{background:rgba(136,136,136,.12);color:var(--gray);}
-    .status-pill{font-size:.6rem;font-weight:600;padding:.2rem .48rem;border-radius:2px;white-space:nowrap;}
+    .status-pill{font-size:.58rem;font-weight:600;padding:.18rem .44rem;border-radius:2px;white-space:nowrap;}
     .s-ok{background:rgba(61,90,58,.18);color:#7bbf78;}
     .s-ruptura{background:rgba(224,92,92,.18);color:#e05c5c;}
     .s-critico{background:rgba(224,154,92,.18);color:#e09a5c;}
     .s-parado{background:rgba(196,168,58,.15);color:#c4a83a;}
     .s-excesso{background:rgba(92,143,224,.15);color:#5c8fe0;}
     .s-reposicao{background:rgba(224,120,92,.12);color:#e07a5c;}
-    .trend-pill{font-size:.58rem;font-weight:600;padding:.18rem .42rem;border-radius:2px;white-space:nowrap;display:inline-block;}
+    .trend-pill{font-size:.56rem;font-weight:600;padding:.16rem .38rem;border-radius:2px;white-space:nowrap;display:inline-block;}
     .t-alta{background:rgba(61,90,58,.22);color:#7bbf78;}
     .t-baixa{background:rgba(224,92,92,.15);color:#e05c5c;}
     .t-estavel{background:rgba(196,168,122,.12);color:var(--gold);}
     .t-nd{background:rgba(136,136,136,.1);color:var(--gray);}
-    .risco-sazon{font-size:.55rem;font-weight:700;padding:.12rem .35rem;border-radius:2px;background:rgba(155,110,216,.2);color:#b48fec;margin-left:3px;letter-spacing:.06em;text-transform:uppercase;}
-    .rfm-pill{font-size:.6rem;font-weight:600;padding:.2rem .48rem;border-radius:2px;white-space:nowrap;}
+    .risco-sazon{font-size:.52rem;font-weight:700;padding:.1rem .3rem;border-radius:2px;background:rgba(155,110,216,.2);color:#b48fec;margin-left:3px;letter-spacing:.05em;text-transform:uppercase;}
+    .rfm-pill{font-size:.58rem;font-weight:600;padding:.18rem .44rem;border-radius:2px;white-space:nowrap;}
     .rfm-champion{background:rgba(61,90,58,.25);color:#7bbf78;}
     .rfm-leal{background:rgba(196,168,122,.18);color:var(--gold);}
     .rfm-potencial{background:rgba(92,143,224,.15);color:#5c8fe0;}
     .rfm-risco{background:rgba(224,154,92,.18);color:#e09a5c;}
     .rfm-perdido{background:rgba(224,92,92,.15);color:#e05c5c;}
     .rfm-novo{background:rgba(155,110,216,.18);color:#b48fec;}
-    .btn-add{display:flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:rgba(196,168,122,.08);border:1px solid var(--border);border-radius:3px;padding:.45rem 1rem;cursor:pointer;transition:all .2s;}
+    .btn-add{display:flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:rgba(196,168,122,.08);border:1px solid var(--border);border-radius:3px;padding:.42rem .9rem;cursor:pointer;transition:all .2s;}
     .btn-add:hover{background:rgba(196,168,122,.14);border-color:var(--gold);}
-    .btn-del{background:none;border:none;color:var(--gray);cursor:pointer;font-size:1rem;line-height:1;padding:.2rem .4rem;border-radius:2px;transition:color .15s;}
+    .btn-del{background:none;border:none;color:var(--gray);cursor:pointer;font-size:.95rem;line-height:1;padding:.2rem .38rem;border-radius:2px;transition:color .15s;}
     .btn-del:hover{color:var(--red);}
-    .table-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;}
-    .btn-analisar{display:flex;align-items:center;justify-content:center;gap:.6rem;background:var(--green);color:var(--white);border:none;border-radius:3px;padding:.9rem 2rem;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .25s;}
+    .table-footer{padding:.9rem 1.4rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;}
+    .btn-analisar{display:flex;align-items:center;justify-content:center;gap:.55rem;background:var(--green);color:var(--white);border:none;border-radius:3px;padding:.85rem 1.8rem;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .25s;}
     .btn-analisar:hover{background:var(--green-light);transform:translateY(-1px);box-shadow:0 8px 24px rgba(61,90,58,.45);}
     .btn-analisar.loading{opacity:.7;pointer-events:none;}
-    .section-label-sm{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;display:block;}
-    .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
-    .kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:5px;padding:.9rem 1rem;}
-    .kpi-label{font-size:.58rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:.35rem;}
-    .kpi-val{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;line-height:1;}
+    .section-label-sm{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;display:block;}
+    /* SCORE DE SAUDE */
+    .score-card{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:1.25rem 1.4rem;display:none;}
+    .score-card.visible{display:block;}
+    .score-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+    .score-title{font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);}
+    .score-big{display:flex;align-items:baseline;gap:.3rem;}
+    .score-num{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:700;line-height:1;}
+    .score-max{font-size:.85rem;color:var(--gray);font-weight:300;}
+    .score-label{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-top:.2rem;}
+    .score-bar-wrap{background:rgba(255,255,255,.06);border-radius:3px;height:5px;margin:.9rem 0 .75rem;overflow:hidden;}
+    .score-bar{height:100%;border-radius:3px;transition:width .8s ease;}
+    .score-breakdown{display:flex;flex-direction:column;gap:.3rem;}
+    .score-item{display:flex;justify-content:space-between;font-size:.72rem;}
+    .score-item span:first-child{color:var(--gray-light);}
+    .score-item span:last-child{font-weight:600;}
+    /* PERDA + ROI */
+    .perda-card{background:linear-gradient(135deg,rgba(224,92,92,.08),rgba(224,92,92,.03));border:1px solid rgba(224,92,92,.2);border-radius:6px;padding:1.25rem 1.4rem;display:none;}
+    .perda-card.visible{display:block;}
+    .perda-title{font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#e05c5c;margin-bottom:.6rem;}
+    .perda-total{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:#e05c5c;line-height:1;margin-bottom:.2rem;}
+    .perda-sub{font-size:.72rem;color:var(--gray-light);margin-bottom:.9rem;}
+    .perda-breakdown{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.9rem;}
+    .perda-item{display:flex;justify-content:space-between;font-size:.75rem;padding:.25rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
+    .perda-item:last-child{border-bottom:none;}
+    .perda-item span:first-child{color:var(--gray-light);}
+    .perda-item span:last-child{font-weight:600;color:var(--white);}
+    .roi-box{background:rgba(61,90,58,.15);border:1px solid rgba(61,90,58,.3);border-radius:4px;padding:.7rem .9rem;text-align:center;}
+    .roi-num{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#7bbf78;}
+    .roi-txt{font-size:.72rem;color:var(--gray-light);margin-top:.15rem;line-height:1.5;}
+    /* KPI */
+    .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;}
+    .kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:5px;padding:.8rem .9rem;}
+    .kpi-label{font-size:.56rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--gray);margin-bottom:.3rem;}
+    .kpi-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;line-height:1;}
     .kpi-val.red{color:var(--red);}.kpi-val.orange{color:var(--orange);}.kpi-val.gold{color:var(--gold);}.kpi-val.green{color:#7bbf78;}.kpi-val.purple{color:#b48fec;}
-    .kpi-sub{font-size:.64rem;color:var(--gray);margin-top:.25rem;}
-    .alertas-list{display:flex;flex-direction:column;gap:.5rem;}
-    .alerta-item{background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:.7rem .9rem;display:flex;align-items:flex-start;gap:.6rem;font-size:.78rem;}
+    .kpi-sub{font-size:.62rem;color:var(--gray);margin-top:.2rem;}
+    /* ALERTAS */
+    .alertas-list{display:flex;flex-direction:column;gap:.45rem;}
+    .alerta-item{background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:.65rem .85rem;display:flex;align-items:flex-start;gap:.55rem;font-size:.76rem;}
     .alerta-item.ruptura{border-left:2px solid var(--red);}
     .alerta-item.critico{border-left:2px solid var(--orange);}
     .alerta-item.parado{border-left:2px solid var(--yellow);}
@@ -92,7 +132,7 @@
     .alerta-item.reposicao{border-left:2px solid #e07a5c;}
     .alerta-item.risco-saz{border-left:2px solid #b48fec;}
     .alerta-item.rfm-churn{border-left:2px solid var(--orange);}
-    .alerta-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+    .alerta-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px;}
     .alerta-item.ruptura .alerta-dot{background:var(--red);}
     .alerta-item.critico .alerta-dot{background:var(--orange);}
     .alerta-item.parado .alerta-dot{background:var(--yellow);}
@@ -101,23 +141,23 @@
     .alerta-item.risco-saz .alerta-dot{background:#b48fec;}
     .alerta-item.rfm-churn .alerta-dot{background:var(--orange);}
     .alerta-nome{font-weight:600;color:var(--white);}
-    .alerta-desc{color:var(--gray-light);font-size:.73rem;margin-top:.1rem;font-weight:300;}
+    .alerta-desc{color:var(--gray-light);font-size:.7rem;margin-top:.08rem;font-weight:300;}
+    /* WA */
     .wa-mockup{background:#161616;border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden;}
-    .wa-header{background:#1f2c1f;padding:.85rem 1rem;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid rgba(255,255,255,.05);}
-    .wa-avatar{width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;color:var(--white);flex-shrink:0;}
-    .wa-name{font-size:.85rem;font-weight:600;}.wa-status{font-size:.65rem;color:#7bbf78;}
-    .wa-body{padding:1rem;}
-    .wa-bubble{background:#1f2f1f;border-radius:0 10px 10px 10px;padding:.9rem 1rem;font-size:.75rem;line-height:1.7;color:#e8e8e8;white-space:pre-wrap;font-family:-apple-system,sans-serif;word-break:break-word;max-height:420px;overflow-y:auto;}
-    .wa-time{text-align:right;font-size:.62rem;color:var(--gray);margin-top:.4rem;}
-    .share-bar{display:flex;gap:.75rem;flex-wrap:wrap;}
-    .btn-share{flex:1;min-width:120px;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1rem;border-radius:3px;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;text-decoration:none;}
+    .wa-header{background:#1f2c1f;padding:.8rem 1rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid rgba(255,255,255,.05);}
+    .wa-avatar{width:34px;height:34px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:var(--white);flex-shrink:0;}
+    .wa-name{font-size:.82rem;font-weight:600;}.wa-status{font-size:.62rem;color:#7bbf78;}
+    .wa-body{padding:.9rem;}
+    .wa-bubble{background:#1f2f1f;border-radius:0 10px 10px 10px;padding:.85rem .95rem;font-size:.73rem;line-height:1.7;color:#e8e8e8;white-space:pre-wrap;font-family:-apple-system,sans-serif;word-break:break-word;max-height:380px;overflow-y:auto;}
+    .wa-time{text-align:right;font-size:.6rem;color:var(--gray);margin-top:.35rem;}
+    .share-bar{display:flex;gap:.65rem;flex-wrap:wrap;}
+    .btn-share{flex:1;min-width:110px;display:flex;align-items:center;justify-content:center;gap:.45rem;padding:.65rem .9rem;border-radius:3px;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;text-decoration:none;}
     .btn-wa{background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.3);color:#25d366;}
     .btn-wa:hover{background:rgba(37,211,102,.2);}
     .btn-copy{background:rgba(196,168,122,.1);border:1px solid var(--border);color:var(--gold);}
     .btn-copy:hover{background:rgba(196,168,122,.18);}
     @keyframes shimmer{0%,100%{opacity:.4;}50%{opacity:.8;}}
     .shimmer{animation:shimmer 1.5s ease-in-out infinite;}
-    @keyframes spin{to{transform:rotate(360deg);}}
   </style>
 </head>
 <body>
@@ -131,138 +171,278 @@
   </div>
 </nav>
 <div class="hero-demo">
-  <div class="v2-pill">Sazonalidade + Clientes RFM</div>
-  <h1>Veja o GIRO <em>analisando</em> seu negócio completo</h1>
-  <p>Insira estoque e clientes reais. O GIRO detecta sazonalidade, classifica clientes por RFM e entrega tudo no WhatsApp toda segunda-feira.</p>
+  <div class="v2-pill">Score de saude + Perda mensal + ROI + Segmentos</div>
+  <h1>Veja o GIRO <em>analisando</em> seu negocio</h1>
+  <p>Escolha seu segmento, edite os dados reais e veja exatamente quanto voce esta perdendo — e como o GIRO resolve.</p>
   <div class="steps-hint">
-    <div class="step-hint"><div class="num">1</div> Edite estoque e clientes</div>
+    <div class="step-hint"><div class="num">1</div> Escolha o segmento</div>
     <div class="step-sep">›</div>
-    <div class="step-hint"><div class="num">2</div> Clique em Rodar Análise</div>
+    <div class="step-hint"><div class="num">2</div> Edite os dados</div>
     <div class="step-sep">›</div>
-    <div class="step-hint"><div class="num">3</div> Veja o relatório WhatsApp</div>
+    <div class="step-hint"><div class="num">3</div> Rode a analise</div>
+    <div class="step-sep">›</div>
+    <div class="step-hint"><div class="num">4</div> Veja o impacto</div>
+  </div>
+</div>
+<!-- SELETOR DE SEGMENTO -->
+<div class="seg-bar">
+  <div class="seg-inner">
+    <span class="seg-label">Seu segmento:</span>
+    <div class="seg-pills">
+      <button class="seg-pill" onclick="trocarSegmento('moda',this)">Moda e Vestuario</button>
+      <button class="seg-pill" onclick="trocarSegmento('calcados',this)">Calcados</button>
+      <button class="seg-pill" onclick="trocarSegmento('papelaria',this)">Papelaria</button>
+      <button class="seg-pill" onclick="trocarSegmento('pet',this)">Pet Shop</button>
+      <button class="seg-pill" onclick="trocarSegmento('beleza',this)">Beleza</button>
+      <button class="seg-pill ativo" onclick="trocarSegmento('geral',this)">Varejo Geral</button>
+    </div>
   </div>
 </div>
 <div class="main">
   <div class="left-col">
     <div class="panel">
       <div class="panel-header">
-        <div><div class="panel-title">Planilha de Estoque</div><div class="panel-sub">V.30d e V.90d = vendas dos últimos 30 e 90 dias</div></div>
+        <div><div class="panel-title">Planilha de Estoque</div><div class="panel-sub">V.30d e V.90d = vendas dos ultimos 30 e 90 dias</div></div>
         <span class="panel-tag">Sazonalidade ativo</span>
       </div>
       <div class="table-wrap">
-        <table id="stockTable">
-          <thead><tr><th>Produto</th><th>SKU</th><th>Estoque</th><th>Mín.</th><th>Custo</th><th>Venda</th><th>V.30d</th><th>V.90d</th><th>Últ. Venda</th><th>ABC</th><th>Status</th><th>Tendência</th><th></th></tr></thead>
-          <tbody id="tableBody"></tbody>
-        </table>
+        <table><thead><tr><th>Produto</th><th>SKU</th><th>Estoque</th><th>Min.</th><th>Custo</th><th>Venda</th><th>V.30d</th><th>V.90d</th><th>Ult. Venda</th><th>ABC</th><th>Status</th><th>Tendencia</th><th></th></tr></thead>
+        <tbody id="tableBody"></tbody></table>
       </div>
       <div class="table-footer">
         <button class="btn-add" onclick="addRow()">+ Produto</button>
-        <button class="btn-analisar" id="btnAnalise" onclick="rodarAnalise()" style="width:auto;padding:.65rem 1.5rem;">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v12M3 7l5-5 5 5"/></svg>
-          Rodar Análise
+        <button class="btn-analisar" id="btnAnalise" onclick="rodarAnalise()" style="width:auto;padding:.6rem 1.4rem;">
+          Rodar Analise
         </button>
       </div>
     </div>
     <div class="panel">
       <div class="panel-header">
-        <div><div class="panel-title">Análise de Clientes — RFM</div><div class="panel-sub">Recência · Frequência · Valor. Identifica quem está sumindo.</div></div>
+        <div><div class="panel-title">Analise de Clientes — RFM</div><div class="panel-sub">Recencia · Frequencia · Valor</div></div>
         <span class="panel-tag" style="background:rgba(155,110,216,.2);color:#b48fec;">Novo</span>
       </div>
       <div class="table-wrap">
-        <table id="clientTable">
-          <thead><tr><th>Nome</th><th>Última compra</th><th>Qtd. compras</th><th>Valor total R$</th><th>Classificação</th><th></th></tr></thead>
-          <tbody id="clientBody"></tbody>
-        </table>
+        <table><thead><tr><th>Nome</th><th>Ultima compra</th><th>Qtd. compras</th><th>Valor total R$</th><th>Classificacao</th><th></th></tr></thead>
+        <tbody id="clientBody"></tbody></table>
       </div>
       <div class="table-footer">
         <button class="btn-add" onclick="addCliente()">+ Cliente</button>
-        <div style="font-size:.7rem;color:var(--gray);">Classificado automaticamente na análise</div>
+        <div style="font-size:.68rem;color:var(--gray);">Classificado automaticamente na analise</div>
       </div>
     </div>
     <div class="panel" id="panelAlertas" style="display:none;">
       <div class="panel-header"><div class="panel-title">Alertas identificados</div><div class="panel-sub" id="alertasCount"></div></div>
-      <div style="padding:1rem 1.25rem;"><div class="alertas-list" id="alertasList"></div></div>
+      <div style="padding:.9rem 1.2rem;"><div class="alertas-list" id="alertasList"></div></div>
     </div>
   </div>
   <div class="right-col">
+    <!-- SCORE DE SAUDE -->
+    <div class="score-card" id="scoreCard">
+      <div class="score-header">
+        <div>
+          <div class="score-title">Saude do Estoque</div>
+          <div class="score-big"><span class="score-num" id="scoreNum">--</span><span class="score-max">/100</span></div>
+          <div class="score-label" id="scoreLabel"></div>
+        </div>
+      </div>
+      <div class="score-bar-wrap"><div class="score-bar" id="scoreBar"></div></div>
+      <div class="score-breakdown" id="scoreBreakdown"></div>
+    </div>
+    <!-- PERDA + ROI -->
+    <div class="perda-card" id="perdaCard">
+      <div class="perda-title">Voce esta perdendo por mes</div>
+      <div class="perda-total" id="perdaTotal">--</div>
+      <div class="perda-sub">soma de rupturas + capital parado + clientes em risco</div>
+      <div class="perda-breakdown" id="perdaBreakdown"></div>
+      <div class="roi-box" id="roiBox"></div>
+    </div>
+    <!-- KPIs -->
     <div>
       <span class="section-label-sm">Painel executivo</span>
       <div class="kpi-grid">
-        <div class="kpi-card"><div class="kpi-label">Produtos</div><div class="kpi-val" id="k-total" style="color:var(--white)">—</div><div class="kpi-sub" id="k-total-sub">aguardando análise</div></div>
-        <div class="kpi-card"><div class="kpi-label">Fat. 30 dias</div><div class="kpi-val gold" id="k-fat">—</div><div class="kpi-sub" id="k-fat-sub">faturamento estimado</div></div>
-        <div class="kpi-card"><div class="kpi-label">Capital parado</div><div class="kpi-val orange" id="k-parado">—</div><div class="kpi-sub" id="k-parado-sub">em produtos sem venda</div></div>
-        <div class="kpi-card"><div class="kpi-label">Rupturas</div><div class="kpi-val red" id="k-rupt">—</div><div class="kpi-sub" id="k-rupt-sub">estoque zerado c/ demanda</div></div>
-        <div class="kpi-card"><div class="kpi-label">Alta temporada</div><div class="kpi-val green" id="k-alta">—</div><div class="kpi-sub" id="k-alta-sub">produtos acelerando +30%</div></div>
-        <div class="kpi-card"><div class="kpi-label">Clientes em risco</div><div class="kpi-val purple" id="k-risco-cli">—</div><div class="kpi-sub" id="k-risco-sub">sumindo sem alerta</div></div>
+        <div class="kpi-card"><div class="kpi-label">Produtos</div><div class="kpi-val" id="k-total" style="color:var(--white)">--</div><div class="kpi-sub" id="k-total-sub">aguardando analise</div></div>
+        <div class="kpi-card"><div class="kpi-label">Fat. 30 dias</div><div class="kpi-val gold" id="k-fat">--</div><div class="kpi-sub" id="k-fat-sub">faturamento estimado</div></div>
+        <div class="kpi-card"><div class="kpi-label">Capital parado</div><div class="kpi-val orange" id="k-parado">--</div><div class="kpi-sub" id="k-parado-sub">em produtos sem venda</div></div>
+        <div class="kpi-card"><div class="kpi-label">Rupturas</div><div class="kpi-val red" id="k-rupt">--</div><div class="kpi-sub" id="k-rupt-sub">estoque zerado c/ demanda</div></div>
+        <div class="kpi-card"><div class="kpi-label">Alta temporada</div><div class="kpi-val green" id="k-alta">--</div><div class="kpi-sub" id="k-alta-sub">produtos acelerando</div></div>
+        <div class="kpi-card"><div class="kpi-label">Clientes em risco</div><div class="kpi-val purple" id="k-risco-cli">--</div><div class="kpi-sub" id="k-risco-sub">sumindo sem alerta</div></div>
       </div>
     </div>
+    <!-- WA -->
     <div>
-      <span class="section-label-sm">Relatório WhatsApp — prévia real</span>
+      <span class="section-label-sm">Relatorio WhatsApp — previa real</span>
       <div class="wa-mockup">
         <div class="wa-header">
           <div class="wa-avatar">GIRO</div>
-          <div><div class="wa-name">GIRO — Inteligência de Estoque</div><div class="wa-status">online</div></div>
+          <div><div class="wa-name">GIRO — Inteligencia de Estoque</div><div class="wa-status">online</div></div>
         </div>
         <div class="wa-body">
-          <div class="wa-bubble" id="waBubble"><span class="shimmer" style="color:var(--gray);font-style:italic;">Insira seus dados e clique em Rodar Análise para ver o relatório que chegaria no seu WhatsApp toda segunda-feira...</span></div>
+          <div class="wa-bubble" id="waBubble"><span class="shimmer" style="color:var(--gray);font-style:italic;">Insira seus dados e clique em Rodar Analise para ver o relatorio que chegaria no seu WhatsApp toda segunda-feira...</span></div>
           <div class="wa-time" id="waTime" style="opacity:.4;">agora</div>
         </div>
       </div>
     </div>
     <div id="shareArea" style="display:none;">
-      <span class="section-label-sm">Compartilhar análise</span>
+      <span class="section-label-sm">Compartilhar analise</span>
       <div class="share-bar">
         <a id="btnWa" href="#" target="_blank" class="btn-share btn-wa">WhatsApp</a>
         <button class="btn-share btn-copy" onclick="copiarRelatorio()">Copiar texto</button>
       </div>
     </div>
-    <div style="background:linear-gradient(135deg,rgba(61,90,58,.15),rgba(61,90,58,.05));border:1px solid rgba(61,90,58,.3);border-radius:6px;padding:1.5rem;text-align:center;">
-      <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;margin-bottom:.5rem;">Quer isso toda semana?</div>
-      <p style="color:var(--gray-light);font-size:.82rem;font-weight:300;margin-bottom:1.25rem;line-height:1.6;">Implantamos em 24h. Na segunda seguinte o relatório já chega no seu WhatsApp.</p>
-      <a href="https://wa.me/5531991876584?text=Vi%20a%20demo%20do%20GIRO%20e%20quero%20implantar" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--white);padding:.8rem 1.75rem;border-radius:3px;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;">
+    <div style="background:linear-gradient(135deg,rgba(61,90,58,.15),rgba(61,90,58,.05));border:1px solid rgba(61,90,58,.3);border-radius:6px;padding:1.4rem;text-align:center;">
+      <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;margin-bottom:.45rem;">Quer isso toda semana?</div>
+      <p style="color:var(--gray-light);font-size:.8rem;font-weight:300;margin-bottom:1.1rem;line-height:1.6;">Implantamos em 24h. Na segunda seguinte o relatorio ja chega no seu WhatsApp.</p>
+      <a href="https://wa.me/5531991876584?text=Vi%20a%20demo%20do%20GIRO%20e%20quero%20implantar" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--white);padding:.75rem 1.6rem;border-radius:3px;font-size:.73rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;">
         Quero implantar o GIRO
       </a>
     </div>
   </div>
 </div>
 <script>
-var exemploEstoque=[
-  {produto:'Camiseta Basica Branca',sku:'CAM-001',estoque:8,min:20,custo:25,venda:79.9,v30:42,v90:85,ultima:'2026-04-30'},
-  {produto:'Calca Jeans Slim 42',sku:'CAL-042',estoque:0,min:5,custo:80,venda:199.9,v30:18,v90:36,ultima:'2026-05-05'},
-  {produto:'Tenis Running Preto',sku:'TEN-RUN',estoque:3,min:8,custo:120,venda:349.9,v30:14,v90:28,ultima:'2026-05-06'},
-  {produto:'Mochila Urban 20L',sku:'MOC-020',estoque:47,min:5,custo:55,venda:149.9,v30:2,v90:18,ultima:'2026-03-10'},
-  {produto:'Meias Kit 3 Pares',sku:'MEI-KIT',estoque:120,min:30,custo:8,venda:29.9,v30:55,v90:115,ultima:'2026-05-07'},
-  {produto:'Blusa Moletom Feminina',sku:'BLU-MOL',estoque:6,min:10,custo:45,venda:129.9,v30:9,v90:19,ultima:'2026-05-04'},
-  {produto:'Short Tactel',sku:'SHO-TAC',estoque:88,min:15,custo:18,venda:49.9,v30:0,v90:0,ultima:'2026-01-20'},
-  {produto:'Bone Snapback',sku:'BON-SNP',estoque:22,min:8,custo:22,venda:69.9,v30:11,v90:30,ultima:'2026-05-01'}
-];
-var exemploClientes=[
-  {nome:'Maria Santos',ultima:'2026-05-06',compras:12,valor:2840},
-  {nome:'Joao Oliveira',ultima:'2026-04-15',compras:8,valor:1920},
-  {nome:'Ana Costa',ultima:'2026-03-02',compras:6,valor:980},
-  {nome:'Paulo Lima',ultima:'2026-01-10',compras:4,valor:560},
-  {nome:'Carla Nunes',ultima:'2026-05-05',compras:2,valor:320},
-  {nome:'Marcos Alves',ultima:'2025-11-20',compras:3,valor:440},
-  {nome:'Luiza Melo',ultima:'2026-05-07',compras:1,valor:189},
-  {nome:'Fernanda Reis',ultima:'2026-04-28',compras:5,valor:750}
-];
-var linhas=exemploEstoque.map(function(d){return Object.assign({},d);});
-var clientes=exemploClientes.map(function(d){return Object.assign({},d);});
+var SEGMENTOS={
+  geral:{
+    estoque:[
+      {produto:'Camiseta Basica Branca',sku:'CAM-001',estoque:8,min:20,custo:25,venda:79.9,v30:42,v90:85,ultima:'2026-04-30'},
+      {produto:'Calca Jeans Slim 42',sku:'CAL-042',estoque:0,min:5,custo:80,venda:199.9,v30:18,v90:36,ultima:'2026-05-05'},
+      {produto:'Tenis Running Preto',sku:'TEN-RUN',estoque:3,min:8,custo:120,venda:349.9,v30:14,v90:28,ultima:'2026-05-06'},
+      {produto:'Mochila Urban 20L',sku:'MOC-020',estoque:47,min:5,custo:55,venda:149.9,v30:2,v90:18,ultima:'2026-03-10'},
+      {produto:'Meias Kit 3 Pares',sku:'MEI-KIT',estoque:120,min:30,custo:8,venda:29.9,v30:55,v90:115,ultima:'2026-05-07'},
+      {produto:'Blusa Moletom Fem.',sku:'BLU-MOL',estoque:6,min:10,custo:45,venda:129.9,v30:9,v90:19,ultima:'2026-05-04'},
+      {produto:'Short Tactel',sku:'SHO-TAC',estoque:88,min:15,custo:18,venda:49.9,v30:0,v90:0,ultima:'2026-01-20'},
+      {produto:'Bone Snapback',sku:'BON-SNP',estoque:22,min:8,custo:22,venda:69.9,v30:11,v90:30,ultima:'2026-05-01'}
+    ],
+    clientes:[
+      {nome:'Maria Santos',ultima:'2026-05-06',compras:12,valor:2840},
+      {nome:'Joao Oliveira',ultima:'2026-04-15',compras:8,valor:1920},
+      {nome:'Ana Costa',ultima:'2026-03-02',compras:6,valor:980},
+      {nome:'Paulo Lima',ultima:'2026-01-10',compras:4,valor:560},
+      {nome:'Carla Nunes',ultima:'2026-05-05',compras:2,valor:320},
+      {nome:'Marcos Alves',ultima:'2025-11-20',compras:3,valor:440},
+      {nome:'Fernanda Reis',ultima:'2026-04-28',compras:5,valor:750}
+    ]
+  },
+  moda:{
+    estoque:[
+      {produto:'Vestido Floral M',sku:'VES-FL-M',estoque:0,min:6,custo:65,venda:189.9,v30:22,v90:44,ultima:'2026-05-06'},
+      {produto:'Calca Wide Leg 38',sku:'CAL-WL-38',estoque:2,min:8,custo:72,venda:179.9,v30:16,v90:32,ultima:'2026-05-04'},
+      {produto:'Blusa Cropped Rosa',sku:'BLU-CR-RS',estoque:0,min:5,custo:28,venda:79.9,v30:31,v90:58,ultima:'2026-05-07'},
+      {produto:'Blazer Oversized',sku:'BLA-OVR',estoque:18,min:4,custo:95,venda:249.9,v30:1,v90:5,ultima:'2026-02-14'},
+      {produto:'Saia Midi Jeans',sku:'SAI-MDJ',estoque:5,min:6,custo:48,venda:139.9,v30:12,v90:24,ultima:'2026-05-02'},
+      {produto:'Top Fitness Preto',sku:'TOP-FIT',estoque:44,min:10,custo:18,venda:59.9,v30:0,v90:1,ultima:'2026-01-05'},
+      {produto:'Jaqueta Jeans Azul',sku:'JAQ-JNS',estoque:3,min:5,custo:88,venda:219.9,v30:8,v90:14,ultima:'2026-04-28'}
+    ],
+    clientes:[
+      {nome:'Juliana Ferreira',ultima:'2026-05-07',compras:15,valor:3420},
+      {nome:'Patricia Gomes',ultima:'2026-04-20',compras:9,valor:2180},
+      {nome:'Renata Lima',ultima:'2026-02-10',compras:7,valor:1640},
+      {nome:'Camila Souza',ultima:'2025-12-15',compras:4,valor:890},
+      {nome:'Beatriz Melo',ultima:'2026-05-05',compras:2,valor:380},
+      {nome:'Larissa Costa',ultima:'2026-04-30',compras:6,valor:1290}
+    ]
+  },
+  calcados:{
+    estoque:[
+      {produto:'Tenis Nike Air 39',sku:'TNK-AIR-39',estoque:0,min:4,custo:180,venda:449.9,v30:12,v90:24,ultima:'2026-05-05'},
+      {produto:'Sandalia Salto Nude 37',sku:'SAN-SAL-37',estoque:1,min:5,custo:55,venda:159.9,v30:9,v90:18,ultima:'2026-04-30'},
+      {produto:'Tenis Casual Branco 41',sku:'TCA-BR-41',estoque:3,min:4,custo:95,venda:259.9,v30:14,v90:28,ultima:'2026-05-06'},
+      {produto:'Chuteira Society 38',sku:'CHU-SOC-38',estoque:28,min:6,custo:75,venda:189.9,v30:1,v90:4,ultima:'2026-02-20'},
+      {produto:'Bota Cano Longo 36',sku:'BOT-CAN-36',estoque:5,min:4,custo:120,venda:329.9,v30:4,v90:7,ultima:'2026-04-15'},
+      {produto:'Rasteira Tiras 38',sku:'RAS-TIR-38',estoque:0,min:3,custo:32,venda:89.9,v30:18,v90:32,ultima:'2026-05-04'},
+      {produto:'Mocassim Couro M 42',sku:'MOC-COU-42',estoque:12,min:3,custo:145,venda:389.9,v30:0,v90:2,ultima:'2025-11-10'}
+    ],
+    clientes:[
+      {nome:'Roberto Alves',ultima:'2026-05-06',compras:10,valor:4280},
+      {nome:'Simone Castro',ultima:'2026-04-10',compras:7,valor:2390},
+      {nome:'Diego Nunes',ultima:'2026-01-08',compras:5,valor:1870},
+      {nome:'Vanessa Rocha',ultima:'2026-05-01',compras:3,valor:780},
+      {nome:'Anderson Lima',ultima:'2025-10-20',compras:4,valor:1640}
+    ]
+  },
+  papelaria:{
+    estoque:[
+      {produto:'Caderno Quadriculado A4',sku:'CAD-QUA',estoque:0,min:20,custo:4.5,venda:14.9,v30:85,v90:142,ultima:'2026-05-07'},
+      {produto:'Kit Canetas Coloridas',sku:'CAN-KIT',estoque:5,min:15,custo:8,venda:24.9,v30:42,v90:76,ultima:'2026-05-06'},
+      {produto:'Agenda 2026 Couro',sku:'AGE-COU',estoque:180,min:10,custo:18,venda:49.9,v30:0,v90:1,ultima:'2026-01-15'},
+      {produto:'Mochila Escolar 18L',sku:'MOC-ESC',estoque:3,min:10,custo:45,venda:119.9,v30:22,v90:38,ultima:'2026-05-03'},
+      {produto:'Estojo Duplo Xadrez',sku:'EST-DUP',estoque:0,min:8,custo:6,venda:19.9,v30:38,v90:65,ultima:'2026-05-05'},
+      {produto:'Lapis de Cor 24 Cores',sku:'LAP-COR',estoque:42,min:15,custo:9,venda:28.9,v30:25,v90:48,ultima:'2026-05-04'},
+      {produto:'Papel Sulfite 500fls',sku:'PAP-SUL',estoque:18,min:20,custo:22,venda:44.9,v30:30,v90:88,ultima:'2026-05-06'}
+    ],
+    clientes:[
+      {nome:'Escola Estadual Centro',ultima:'2026-05-07',compras:20,valor:5640},
+      {nome:'Papelaria do Bairro',ultima:'2026-04-25',compras:12,valor:3280},
+      {nome:'Maria Eduarda',ultima:'2026-03-01',compras:5,valor:420},
+      {nome:'Colegio Particular',ultima:'2025-12-10',compras:8,valor:2180},
+      {nome:'Jose Carlos',ultima:'2026-05-06',compras:3,valor:180}
+    ]
+  },
+  pet:{
+    estoque:[
+      {produto:'Racao Golden Senior 15kg',sku:'RAC-GLD-15',estoque:0,min:5,custo:88,venda:189.9,v30:22,v90:44,ultima:'2026-05-05'},
+      {produto:'Areia Higienica 4kg',sku:'ARE-HIG-4',estoque:2,min:10,custo:14,venda:34.9,v30:48,v90:94,ultima:'2026-05-07'},
+      {produto:'Coleira Antipulgas G',sku:'COL-APG',estoque:18,min:5,custo:22,venda:59.9,v30:8,v90:22,ultima:'2026-04-10'},
+      {produto:'Brinquedo Corda Pet',sku:'BRI-COR',estoque:52,min:8,custo:8,venda:24.9,v30:0,v90:2,ultima:'2026-01-20'},
+      {produto:'Shampoo Pet 500ml',sku:'SHA-PET',estoque:3,min:8,custo:12,venda:32.9,v30:19,v90:37,ultima:'2026-05-03'},
+      {produto:'Ração Gato Castrado 3kg',sku:'RAC-GAT-3',estoque:0,min:6,custo:42,venda:99.9,v30:28,v90:55,ultima:'2026-05-06'},
+      {produto:'Caminha Ortopedica M',sku:'CAM-ORT-M',estoque:14,min:4,custo:65,venda:159.9,v30:2,v90:6,ultima:'2026-03-05'}
+    ],
+    clientes:[
+      {nome:'Clinica Vet Saude Animal',ultima:'2026-05-07',compras:18,valor:6420},
+      {nome:'Ana Paula Gomes',ultima:'2026-05-04',compras:11,valor:2840},
+      {nome:'Carlos Eduardo',ultima:'2026-03-15',compras:7,valor:1380},
+      {nome:'Marcia Fernandes',ultima:'2025-11-28',compras:5,valor:920},
+      {nome:'Lucas Ribeiro',ultima:'2026-05-06',compras:3,valor:460}
+    ]
+  },
+  beleza:{
+    estoque:[
+      {produto:'Batom Matte Vermelho',sku:'BAT-MAT-VM',estoque:0,min:8,custo:12,venda:39.9,v30:45,v90:88,ultima:'2026-05-07'},
+      {produto:'Base Liquida Clara 30',sku:'BAS-CLR-30',estoque:2,min:6,custo:28,venda:79.9,v30:22,v90:44,ultima:'2026-05-05'},
+      {produto:'Perfume Femme 100ml',sku:'PER-FEM',estoque:8,min:4,custo:95,venda:249.9,v30:6,v90:12,ultima:'2026-04-22'},
+      {produto:'Kit Skincare Hidratante',sku:'SKN-HID',estoque:35,min:5,custo:42,venda:119.9,v30:0,v90:3,ultima:'2026-01-30'},
+      {produto:'Rimel Volume Max',sku:'RIM-VOL',estoque:0,min:6,custo:18,venda:49.9,v30:38,v90:72,ultima:'2026-05-06'},
+      {produto:'Paleta Sombra Nude',sku:'PAL-SOM',estoque:4,min:5,custo:32,venda:89.9,v30:15,v90:28,ultima:'2026-05-01'},
+      {produto:'Creme Anti-idade 50ml',sku:'CRE-ANT',estoque:22,min:4,custo:55,venda:139.9,v30:0,v90:1,ultima:'2025-12-10'}
+    ],
+    clientes:[
+      {nome:'Isabella Martins',ultima:'2026-05-07',compras:14,valor:3920},
+      {nome:'Studio Beauty Fit',ultima:'2026-04-28',compras:9,valor:2640},
+      {nome:'Gabriela Souza',ultima:'2026-02-20',compras:6,valor:1280},
+      {nome:'Salao Glamour',ultima:'2025-11-15',compras:4,valor:980},
+      {nome:'Thais Oliveira',ultima:'2026-05-03',compras:2,valor:350}
+    ]
+  }
+};
+
+var linhas=SEGMENTOS.geral.estoque.map(function(d){return Object.assign({},d);});
+var clientes=SEGMENTOS.geral.clientes.map(function(d){return Object.assign({},d);});
 var relatorioGerado='';
+
+function trocarSegmento(seg,el){
+  document.querySelectorAll('.seg-pill').forEach(function(p){p.classList.remove('ativo');});
+  el.classList.add('ativo');
+  linhas=SEGMENTOS[seg].estoque.map(function(d){return Object.assign({},d);});
+  clientes=SEGMENTOS[seg].clientes.map(function(d){return Object.assign({},d);});
+  renderEstoque(false);
+  renderClientes(false);
+  document.getElementById('panelAlertas').style.display='none';
+  document.getElementById('scoreCard').classList.remove('visible');
+  document.getElementById('perdaCard').classList.remove('visible');
+  document.getElementById('shareArea').style.display='none';
+  document.getElementById('waBubble').innerHTML='<span class="shimmer" style="color:var(--gray);font-style:italic;">Clique em Rodar Analise para ver o relatorio...</span>';
+  ['k-total','k-fat','k-parado','k-rupt','k-alta','k-risco-cli'].forEach(function(id){document.getElementById(id).textContent='--';});
+}
 
 function calcTendencia(v30,v90){
   if(!v90||v90===0) return {label:'Sem dado',cls:'t-nd',trend:'ND',vel:0};
-  var mediaM=v90/3;
-  var ratio=v30/mediaM;
-  var vel=Math.round((ratio-1)*100);
+  var mediaM=v90/3,ratio=v30/mediaM,vel=Math.round((ratio-1)*100);
   if(ratio>=1.3) return {label:'Alta +'+vel+'%',cls:'t-alta',trend:'ALTA',vel:vel};
   if(ratio<=0.7) return {label:'Baixa '+vel+'%',cls:'t-baixa',trend:'BAIXA',vel:vel};
   return {label:'Estavel '+(vel>=0?'+':'')+vel+'%',cls:'t-estavel',trend:'ESTAVEL',vel:vel};
 }
 
 function calcRFM(c,maxC,maxV){
-  var hoje=new Date();
-  var dias=c.ultima?Math.floor((hoje-new Date(c.ultima))/86400000):999;
+  var hoje=new Date(),dias=c.ultima?Math.floor((hoje-new Date(c.ultima))/86400000):999;
   var R=dias<=14?5:dias<=30?4:dias<=60?3:dias<=90?2:1;
   var F=maxC>0?Math.max(1,Math.ceil((c.compras/maxC)*5)):1;
   var M=maxV>0?Math.max(1,Math.ceil((c.valor/maxV)*5)):1;
@@ -277,11 +457,16 @@ function calcRFM(c,maxC,maxV){
   return {R:R,F:F,M:M,cls:cls,label:label,emRisco:emRisco,dias:dias};
 }
 
+function calcScore(rupt,crit,rep,exc,par,emRisco,riscoSaz){
+  var s=100;
+  s-=rupt*15; s-=crit*8; s-=rep*5; s-=exc*3; s-=par*4; s-=emRisco*5; s-=riscoSaz*8;
+  return Math.max(0,Math.min(100,s));
+}
+
 function renderEstoque(comKpis){
-  var tbody=document.getElementById('tableBody');
-  var hoje=new Date();
+  var tbody=document.getElementById('tableBody'),hoje=new Date();
   tbody.innerHTML=linhas.map(function(l,i){
-    var abc='--',statusClass='s-ok',statusLabel='Normal',tendHtml='--';
+    var abc='--',statusClass='s-ok',statusLabel='OK',tendHtml='--';
     if(comKpis){
       abc=l._abc||'--';
       var diasSem=l.ultima?Math.floor((hoje-new Date(l.ultima))/86400000):999;
@@ -298,43 +483,37 @@ function renderEstoque(comKpis){
     var abcC=abc==='A'?'abc-a':abc==='B'?'abc-b':abc==='C'?'abc-c':'';
     return '<tr>'
       +'<td><input type="text" value="'+l.produto+'" onchange="linhas['+i+'].produto=this.value"/></td>'
-      +'<td><input type="text" value="'+l.sku+'" onchange="linhas['+i+'].sku=this.value" style="min-width:78px;"/></td>'
-      +'<td><input type="number" value="'+l.estoque+'" onchange="linhas['+i+'].estoque=+this.value" style="min-width:52px;"/></td>'
-      +'<td><input type="number" value="'+l.min+'" onchange="linhas['+i+'].min=+this.value" style="min-width:48px;"/></td>'
-      +'<td><input type="number" value="'+l.custo+'" onchange="linhas['+i+'].custo=+this.value" style="min-width:58px;"/></td>'
-      +'<td><input type="number" value="'+l.venda+'" onchange="linhas['+i+'].venda=+this.value" style="min-width:62px;"/></td>'
-      +'<td><input type="number" value="'+l.v30+'" onchange="linhas['+i+'].v30=+this.value" style="min-width:48px;"/></td>'
-      +'<td><input type="number" value="'+l.v90+'" onchange="linhas['+i+'].v90=+this.value" style="min-width:48px;"/></td>'
+      +'<td><input type="text" value="'+l.sku+'" onchange="linhas['+i+'].sku=this.value" style="min-width:75px;"/></td>'
+      +'<td><input type="number" value="'+l.estoque+'" onchange="linhas['+i+'].estoque=+this.value" style="min-width:50px;"/></td>'
+      +'<td><input type="number" value="'+l.min+'" onchange="linhas['+i+'].min=+this.value" style="min-width:46px;"/></td>'
+      +'<td><input type="number" value="'+l.custo+'" onchange="linhas['+i+'].custo=+this.value" style="min-width:56px;"/></td>'
+      +'<td><input type="number" value="'+l.venda+'" onchange="linhas['+i+'].venda=+this.value" style="min-width:60px;"/></td>'
+      +'<td><input type="number" value="'+l.v30+'" onchange="linhas['+i+'].v30=+this.value" style="min-width:46px;"/></td>'
+      +'<td><input type="number" value="'+l.v90+'" onchange="linhas['+i+'].v90=+this.value" style="min-width:46px;"/></td>'
       +'<td><input type="date" value="'+(l.ultima||'')+'" onchange="linhas['+i+'].ultima=this.value"/></td>'
       +'<td>'+(comKpis&&abc!=='--'?'<span class="abc-badge '+abcC+'">'+abc+'</span>':'<span style="color:var(--gray)">--</span>')+'</td>'
       +'<td>'+(comKpis?'<span class="status-pill '+statusClass+'">'+statusLabel+'</span>':'<span style="color:var(--gray)">--</span>')+'</td>'
-      +'<td style="min-width:110px;">'+(comKpis?tendHtml:'<span style="color:var(--gray)">--</span>')+'</td>'
-      +'<td><button class="btn-del" onclick="removerLinha('+i+')" title="Remover">x</button></td>'
-      +'</tr>';
+      +'<td style="min-width:105px;">'+(comKpis?tendHtml:'<span style="color:var(--gray)">--</span>')+'</td>'
+      +'<td><button class="btn-del" onclick="removerLinha('+i+')">x</button></td></tr>';
   }).join('');
 }
-
-function addRow(){
-  linhas.push({produto:'Novo Produto',sku:'SKU-000',estoque:10,min:5,custo:30,venda:89.9,v30:5,v90:15,ultima:new Date().toISOString().split('T')[0]});
-  renderEstoque(false);
-}
+function addRow(){linhas.push({produto:'Novo Produto',sku:'SKU-000',estoque:10,min:5,custo:30,venda:89.9,v30:5,v90:15,ultima:new Date().toISOString().split('T')[0]});renderEstoque(false);}
 function removerLinha(i){linhas.splice(i,1);renderEstoque(false);}
 
 function renderClientes(comKpis){
   var tbody=document.getElementById('clientBody');
-  var maxC=Math.max.apply(null,clientes.map(function(c){return c.compras;}));
-  var maxV=Math.max.apply(null,clientes.map(function(c){return c.valor;}));
+  var maxC=clientes.length?Math.max.apply(null,clientes.map(function(c){return c.compras;})):1;
+  var maxV=clientes.length?Math.max.apply(null,clientes.map(function(c){return c.valor;})):1;
   tbody.innerHTML=clientes.map(function(c,i){
     var rfmHtml='<span style="color:var(--gray)">--</span>';
     if(comKpis){var rfm=calcRFM(c,maxC,maxV);rfmHtml='<span class="rfm-pill '+rfm.cls+'">'+rfm.label+'</span>';}
     return '<tr>'
       +'<td><input type="text" value="'+c.nome+'" onchange="clientes['+i+'].nome=this.value"/></td>'
       +'<td><input type="date" value="'+(c.ultima||'')+'" onchange="clientes['+i+'].ultima=this.value"/></td>'
-      +'<td><input type="number" value="'+c.compras+'" onchange="clientes['+i+'].compras=+this.value" style="min-width:70px;"/></td>'
-      +'<td><input type="number" value="'+c.valor+'" onchange="clientes['+i+'].valor=+this.value" style="min-width:80px;"/></td>'
+      +'<td><input type="number" value="'+c.compras+'" onchange="clientes['+i+'].compras=+this.value" style="min-width:68px;"/></td>'
+      +'<td><input type="number" value="'+c.valor+'" onchange="clientes['+i+'].valor=+this.value" style="min-width:78px;"/></td>'
       +'<td>'+rfmHtml+'</td>'
-      +'<td><button class="btn-del" onclick="removerCliente('+i+')" title="Remover">x</button></td>'
-      +'</tr>';
+      +'<td><button class="btn-del" onclick="removerCliente('+i+')">x</button></td></tr>';
   }).join('');
 }
 function addCliente(){clientes.push({nome:'Novo Cliente',ultima:new Date().toISOString().split('T')[0],compras:1,valor:100});renderClientes(false);}
@@ -342,18 +521,14 @@ function removerCliente(i){clientes.splice(i,1);renderClientes(false);}
 
 function rodarAnalise(){
   var btn=document.getElementById('btnAnalise');
-  btn.classList.add('loading');
-  btn.innerHTML='Analisando...';
+  btn.classList.add('loading');btn.textContent='Analisando...';
   setTimeout(function(){
-    var hoje=new Date();
-    var dataStr=hoje.toLocaleDateString('pt-BR');
+    var hoje=new Date(),dataStr=hoje.toLocaleDateString('pt-BR');
     var proc=linhas.map(function(l){
       var diasSem=l.ultima?Math.floor((hoje-new Date(l.ultima))/86400000):999;
       var cob=l.v30>0?Math.round(l.estoque/(l.v30/30)):999;
-      var fat30=l.v30*l.venda;
-      var capParado=diasSem>90&&l.estoque>0?l.estoque*l.custo:0;
-      var tend=calcTendencia(l.v30,l.v90);
-      var status='normal';
+      var fat30=l.v30*l.venda,capParado=diasSem>90&&l.estoque>0?l.estoque*l.custo:0;
+      var tend=calcTendencia(l.v30,l.v90),status='normal';
       if(l.estoque===0&&l.v30>0) status='ruptura';
       else if(l.estoque>0&&l.estoque<l.min) status='critico';
       else if(diasSem>90&&l.estoque>0) status='parado';
@@ -366,10 +541,7 @@ function rodarAnalise(){
     var acum=0;
     sorted.forEach(function(p){acum+=p.fat30;p._abc=totalFat>0?(acum/totalFat<=0.7?'A':acum/totalFat<=0.9?'B':'C'):'C';});
     proc.forEach(function(p){var m=sorted.find(function(s){return s.sku===p.sku;});if(m)p._abc=m._abc;});
-    linhas.forEach(function(l,i){
-      l._abc=proc[i]._abc;
-      l._riscoSazon=proc[i]._abc==='A'&&proc[i].tend.trend==='ALTA'&&l.estoque<l.min*2;
-    });
+    linhas.forEach(function(l,i){l._abc=proc[i]._abc;l._riscoSazon=proc[i]._abc==='A'&&proc[i].tend.trend==='ALTA'&&l.estoque<l.min*2;});
     var rupturas=proc.filter(function(p){return p.status==='ruptura';});
     var criticos=proc.filter(function(p){return p.status==='critico';});
     var parados=proc.filter(function(p){return p.status==='parado';});
@@ -380,13 +552,54 @@ function rodarAnalise(){
     var curvaA=proc.filter(function(p){return p._abc==='A';});
     var totalCap=proc.reduce(function(s,p){return s+p.capParado;},0);
     var totalFat30=proc.reduce(function(s,p){return s+p.fat30;},0);
-    var maxC=Math.max.apply(null,clientes.map(function(c){return c.compras;}));
-    var maxV=Math.max.apply(null,clientes.map(function(c){return c.valor;}));
+    var maxC=clientes.length?Math.max.apply(null,clientes.map(function(c){return c.compras;})):1;
+    var maxV=clientes.length?Math.max.apply(null,clientes.map(function(c){return c.valor;})):1;
     var cliProc=clientes.map(function(c){return Object.assign({},c,{rfm:calcRFM(c,maxC,maxV)});});
     var champions=cliProc.filter(function(c){return c.rfm.label==='Champion';});
     var emRisco=cliProc.filter(function(c){return c.rfm.emRisco;});
     var perdidos=cliProc.filter(function(c){return c.rfm.label==='Perdido'||c.rfm.label==='Dormente';});
     var novos=cliProc.filter(function(c){return c.rfm.label==='Novo Potencial';});
+
+    /* --- SCORE DE SAUDE --- */
+    var score=calcScore(rupturas.length,criticos.length,reposicoes.length,excessos.length,parados.length,emRisco.length,riscoSazon.length);
+    var scoreCor=score>=80?'#7bbf78':score>=60?'#c4a83a':score>=40?'#e09a5c':'#e05c5c';
+    var scoreTexto=score>=80?'SAUDAVEL':score>=60?'ATENCAO':score>=40?'CRITICO':'GRAVE';
+    document.getElementById('scoreNum').textContent=score;
+    document.getElementById('scoreNum').style.color=scoreCor;
+    document.getElementById('scoreLabel').textContent=scoreTexto;
+    document.getElementById('scoreLabel').style.color=scoreCor;
+    document.getElementById('scoreBar').style.width=score+'%';
+    document.getElementById('scoreBar').style.background=scoreCor;
+    var bd='';
+    if(rupturas.length) bd+='<div class="score-item"><span>Rupturas (-'+rupturas.length*15+'pts)</span><span style="color:#e05c5c">'+rupturas.length+' produto(s)</span></div>';
+    if(criticos.length) bd+='<div class="score-item"><span>Criticos (-'+criticos.length*8+'pts)</span><span style="color:#e09a5c">'+criticos.length+' produto(s)</span></div>';
+    if(parados.length) bd+='<div class="score-item"><span>Parados (-'+parados.length*4+'pts)</span><span style="color:#c4a83a">'+parados.length+' produto(s)</span></div>';
+    if(emRisco.length) bd+='<div class="score-item"><span>Clientes risco (-'+emRisco.length*5+'pts)</span><span style="color:#e09a5c">'+emRisco.length+' cliente(s)</span></div>';
+    if(!bd) bd='<div class="score-item"><span style="color:#7bbf78">Nenhum problema critico encontrado</span></div>';
+    document.getElementById('scoreBreakdown').innerHTML=bd;
+    document.getElementById('scoreCard').classList.add('visible');
+
+    /* --- PERDA MENSAL + ROI --- */
+    var perdaRupturas=rupturas.reduce(function(s,p){return s+p.fat30;},0);
+    var perdaCapital=totalCap*0.08;
+    var perdaClientes=emRisco.reduce(function(s,c){return s+(c.valor/12);},0);
+    var perdaTotal=perdaRupturas+perdaCapital+perdaClientes;
+    var plano=297;
+    var diasROI=perdaTotal>0?Math.ceil(plano/(perdaTotal/30)):0;
+    document.getElementById('perdaTotal').textContent='R$ '+Math.round(perdaTotal).toLocaleString('pt-BR')+'/mes';
+    var bkd='';
+    if(perdaRupturas>0) bkd+='<div class="perda-item"><span>Vendas perdidas (rupturas)</span><span>R$ '+Math.round(perdaRupturas).toLocaleString('pt-BR')+'</span></div>';
+    if(perdaCapital>0) bkd+='<div class="perda-item"><span>Custo do capital parado (8%/mes)</span><span>R$ '+Math.round(perdaCapital).toLocaleString('pt-BR')+'</span></div>';
+    if(perdaClientes>0) bkd+='<div class="perda-item"><span>Receita mensal de clientes em risco</span><span>R$ '+Math.round(perdaClientes).toLocaleString('pt-BR')+'</span></div>';
+    if(!bkd) bkd='<div class="perda-item"><span style="color:#7bbf78">Nenhuma perda critica identificada</span></div>';
+    document.getElementById('perdaBreakdown').innerHTML=bkd;
+    var roiHtml=diasROI>0
+      ?'<div class="roi-num">'+diasROI+' dias</div><div class="roi-txt">para o GIRO se pagar com o plano Essencial (R$ 297/mes)<br>com as oportunidades identificadas acima</div>'
+      :'<div class="roi-num" style="color:#7bbf78">Imediato</div><div class="roi-txt">Seu estoque esta equilibrado. O GIRO mantem assim e antecipa problemas futuros.</div>';
+    document.getElementById('roiBox').innerHTML=roiHtml;
+    document.getElementById('perdaCard').classList.add('visible');
+
+    /* --- KPIs --- */
     document.getElementById('k-total').textContent=proc.length;
     document.getElementById('k-total-sub').textContent=curvaA.length+' Curva A';
     document.getElementById('k-fat').textContent='R$ '+totalFat30.toLocaleString('pt-BR',{maximumFractionDigits:0});
@@ -396,16 +609,18 @@ function rodarAnalise(){
     document.getElementById('k-rupt').textContent=rupturas.length;
     document.getElementById('k-rupt-sub').textContent=rupturas.length>0?rupturas.map(function(r){return r.produto;}).join(', '):'nenhuma';
     document.getElementById('k-alta').textContent=altaTemp.length;
-    document.getElementById('k-alta-sub').textContent=riscoSazon.length>0?riscoSazon.length+' com risco de ruptura':'ok nessa temporada';
+    document.getElementById('k-alta-sub').textContent=riscoSazon.length>0?riscoSazon.length+' com risco sazonal':'ok nessa temporada';
     document.getElementById('k-risco-cli').textContent=emRisco.length;
     document.getElementById('k-risco-sub').textContent=emRisco.length>0?emRisco.map(function(c){return c.nome.split(' ')[0];}).join(', '):'clientes estaveis';
+
+    /* --- ALERTAS --- */
     var alertas=[];
-    riscoSazon.forEach(function(p){alertas.push({tipo:'risco-saz',nome:p.produto,desc:'Curva A em ALTA TEMPORADA ('+p.tend.vel+'%) com estoque baixo. Risco de ruptura iminente.'});});
-    rupturas.forEach(function(p){alertas.push({tipo:'ruptura',nome:p.produto,desc:'Sem estoque com '+p.v30+' vendas em 30d. Perda: ~R$ '+(p.venda*p.v30/30).toFixed(0)+'/dia.'});});
+    riscoSazon.forEach(function(p){alertas.push({tipo:'risco-saz',nome:p.produto,desc:'Curva A em ALTA TEMPORADA com estoque baixo. Risco de ruptura iminente.'});});
+    rupturas.forEach(function(p){alertas.push({tipo:'ruptura',nome:p.produto,desc:'Sem estoque com '+p.v30+' vendas em 30d. Perdendo ~R$ '+Math.round(p.venda*p.v30/30)+'/dia.'});});
     criticos.forEach(function(p){alertas.push({tipo:'critico',nome:p.produto,desc:p.estoque+' un abaixo do minimo de '+p.min+'. Cobertura: '+p.cob+' dias.'});});
     reposicoes.forEach(function(p){alertas.push({tipo:'reposicao',nome:p.produto,desc:'Cobertura de '+p.cob+' dias. Repor antes de entrar em ruptura.'});});
-    emRisco.forEach(function(c){alertas.push({tipo:'rfm-churn',nome:c.nome,desc:'Cliente em risco. Ultima compra ha '+c.rfm.dias+' dias. Valor historico: R$ '+c.valor.toLocaleString('pt-BR')+'.'});});
-    parados.forEach(function(p){alertas.push({tipo:'parado',nome:p.produto,desc:p.diasSem+' dias sem venda. Capital: R$ '+(p.capParado).toFixed(0)+'.'});});
+    emRisco.forEach(function(c){alertas.push({tipo:'rfm-churn',nome:c.nome,desc:'Ultimo compra ha '+c.rfm.dias+' dias. Historico: R$ '+c.valor.toLocaleString('pt-BR')+'. Acionar hoje.'});});
+    parados.forEach(function(p){alertas.push({tipo:'parado',nome:p.produto,desc:p.diasSem+' dias sem venda. Capital imobilizado: R$ '+Math.round(p.capParado)+'.'});});
     if(alertas.length>0){
       document.getElementById('panelAlertas').style.display='block';
       document.getElementById('alertasCount').textContent=alertas.length+' item'+(alertas.length>1?'s':'')+' precisam de atencao';
@@ -413,69 +628,56 @@ function rodarAnalise(){
         return '<div class="alerta-item '+a.tipo+'"><div class="alerta-dot"></div><div><div class="alerta-nome">'+a.nome+'</div><div class="alerta-desc">'+a.desc+'</div></div></div>';
       }).join('');
     }
+
+    /* --- WHATSAPP --- */
     var bRupt=rupturas.length>0?'Ruptura: '+rupturas.map(function(p){return p.produto;}).join(', ')+'\n':'';
     var bCrit=criticos.length>0?'Critico: '+criticos.length+' produto(s)\n':'';
     var bRep=reposicoes.length>0?'Repor esta semana: '+reposicoes.length+' produto(s)\n':'';
-    var bParado=parados.length>0?'Capital parado: R$ '+totalCap.toFixed(0)+' em '+parados.length+' produto(s)\n':'';
-    var bSazon='';
-    if(riscoSazon.length>0) bSazon='\nRISCO SAZONAL (Curva A em alta c/ estoque baixo):\n'+riscoSazon.map(function(p){return '  - '+p.produto+' ('+p.tend.label+')';}).join('\n')+'\n';
-    else if(altaTemp.length>0) bSazon='\nAlta temporada: '+altaTemp.map(function(p){return p.produto+' ('+p.tend.label+')';}).join(', ')+'\n';
+    var bPar=parados.length>0?'Capital parado: R$ '+Math.round(totalCap).toLocaleString('pt-BR')+' em '+parados.length+' produto(s)\n':'';
+    var bSazon=riscoSazon.length>0?'\nRISCO SAZONAL: '+riscoSazon.map(function(p){return p.produto;}).join(', ')+'\n':'';
     var bCli='';
     if(clientes.length>0){
       bCli='\n--- CLIENTES RFM ---\n';
-      if(champions.length>0) bCli+='Champions ('+champions.length+'): '+champions.map(function(c){return c.nome;}).join(', ')+'\n';
-      if(emRisco.length>0) bCli+='Em risco de churn ('+emRisco.length+'): '+emRisco.map(function(c){return c.nome+' ('+c.rfm.dias+'d sem comprar)';}).join(', ')+' - acionar hoje\n';
-      if(perdidos.length>0) bCli+='Dormentes/perdidos ('+perdidos.length+'): '+perdidos.map(function(c){return c.nome;}).join(', ')+'\n';
-      if(novos.length>0) bCli+='Novos com potencial ('+novos.length+'): '+novos.map(function(c){return c.nome;}).join(', ')+'\n';
+      if(champions.length>0) bCli+='Champions: '+champions.map(function(c){return c.nome;}).join(', ')+'\n';
+      if(emRisco.length>0) bCli+='Em risco de churn: '+emRisco.map(function(c){return c.nome+' ('+c.rfm.dias+'d)';}).join(', ')+'\n';
+      if(perdidos.length>0) bCli+='Dormentes: '+perdidos.map(function(c){return c.nome;}).join(', ')+'\n';
     }
     var recs=[];
-    if(riscoSazon.length>0) recs.push('URGENTE: '+riscoSazon[0].produto+' (Curva A) em alta temporada com estoque critico. Pedir hoje.');
-    if(rupturas.length>0) recs.push('Repor '+rupturas[0].produto+' - perdendo R$ '+(rupturas[0].venda*rupturas[0].v30/30).toFixed(0)+'/dia.');
-    if(emRisco.length>0) recs.push('Contatar '+emRisco[0].nome+' ('+emRisco[0].rfm.dias+'d sem comprar) com oferta especial.');
-    if(parados.length>0) recs.push('Promocao em '+parados.length+' produto(s) parado(s) - libera R$ '+totalCap.toFixed(0)+' de capital.');
-    if(recs.length===0) recs.push('Estoque e clientes em situacao equilibrada esta semana.');
+    if(riscoSazon.length>0) recs.push('URGENTE: '+riscoSazon[0].produto+' (Curva A) acelerando com estoque critico. Pedir hoje.');
+    if(rupturas.length>0) recs.push('Repor '+rupturas[0].produto+' - perdendo R$ '+Math.round(rupturas[0].venda*rupturas[0].v30/30)+'/dia.');
+    if(emRisco.length>0) recs.push('Acionar '+emRisco[0].nome+' com oferta especial ('+emRisco[0].rfm.dias+' dias sem comprar).');
+    if(parados.length>0) recs.push('Promocao em '+parados.length+' produto(s) parado(s) - libera R$ '+Math.round(totalCap).toLocaleString('pt-BR')+'.');
+    if(perdaTotal>0) recs.push('Oportunidade total identificada: R$ '+Math.round(perdaTotal).toLocaleString('pt-BR')+'/mes. GIRO se paga em '+diasROI+' dias.');
+    if(recs.length===0) recs.push('Estoque e clientes equilibrados. Monitoramento continuo ativo.');
     relatorioGerado='GIRO - Relatorio Inteligente\n'
+      +'Score de Saude: '+score+'/100 ('+scoreTexto+')\n'
+      +'Perda mensal identificada: R$ '+Math.round(perdaTotal).toLocaleString('pt-BR')+'\n'
       +dataStr+'\n\n'
-      +'--- PAINEL RAPIDO ---\n'
-      +'Produtos: '+proc.length+' (Curva A: '+curvaA.length+')\n'
-      +'Faturamento 30d: R$ '+totalFat30.toLocaleString('pt-BR',{minimumFractionDigits:2})+'\n'
-      +'Capital parado: R$ '+totalCap.toLocaleString('pt-BR',{minimumFractionDigits:2})+'\n'
-      +'Clientes: '+clientes.length+'\n\n'
-      +bRupt+bCrit+bRep+bParado
-      +bSazon+bCli+'\n'
-      +'--- ACOES DA SEMANA ---\n'
+      +'--- ESTOQUE ---\n'
+      +'Produtos: '+proc.length+' | Curva A: '+curvaA.length+' | Fat.30d: R$ '+Math.round(totalFat30).toLocaleString('pt-BR')+'\n\n'
+      +bRupt+bCrit+bRep+bPar+bSazon+bCli+'\n'
+      +'--- ACOES ---\n'
       +recs.map(function(r){return '* '+r;}).join('\n')+'\n\n'
-      +'Relatorio gerado pelo GIRO - ELEVARIA';
+      +'Relatorio GIRO - ELEVARIA | (31) 991876584';
     document.getElementById('waBubble').textContent=relatorioGerado;
     document.getElementById('waTime').textContent=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
     document.getElementById('waTime').style.opacity='1';
     document.getElementById('btnWa').href='https://wa.me/5531991876584?text='+encodeURIComponent(relatorioGerado);
     document.getElementById('shareArea').style.display='block';
-    renderEstoque(true);
-    renderClientes(true);
-    btn.classList.remove('loading');
-    btn.innerHTML='Analise concluida';
-    btn.style.background='#2a6e27';
-    setTimeout(function(){
-      btn.innerHTML='<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v12M3 7l5-5 5 5"/></svg> Rodar Analise';
-      btn.style.background='';
-    },3000);
-    document.getElementById('panelAlertas').scrollIntoView({behavior:'smooth',block:'nearest'});
+    renderEstoque(true);renderClientes(true);
+    btn.classList.remove('loading');btn.textContent='Analise concluida';btn.style.background='#2a6e27';
+    setTimeout(function(){btn.textContent='Rodar Analise';btn.style.background='';},3000);
+    document.getElementById('scoreCard').scrollIntoView({behavior:'smooth',block:'nearest'});
   },1100);
 }
-
 function copiarRelatorio(){
   if(!relatorioGerado) return;
   navigator.clipboard.writeText(relatorioGerado).then(function(){
-    var btn=document.querySelector('.btn-copy');
-    btn.textContent='Copiado!';
-    btn.style.color='#7bbf78';
+    var btn=document.querySelector('.btn-copy');btn.textContent='Copiado!';btn.style.color='#7bbf78';
     setTimeout(function(){btn.textContent='Copiar texto';btn.style.color='';},2000);
   });
 }
-
-renderEstoque(false);
-renderClientes(false);
+renderEstoque(false);renderClientes(false);
 </script>
 </body>
 </html>
