@@ -7,143 +7,162 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0A0A0A; --bg-alt: #111; --bg-card: #141414; --bg-input: #1a1a1a;
-      --green: #3D5A3A; --green-light: #4a6e47; --green-glow: rgba(61,90,58,0.2);
-      --accent: #E87B6A; --gold: #C4A87A; --white: #F5F5F0;
-      --gray: #888; --gray-light: #aaa; --border: rgba(196,168,122,0.12);
-      --red: #e05c5c; --orange: #e09a5c; --yellow: #c4a83a; --blue: #5c8fe0;
+      --bg:#0A0A0A; --bg-alt:#111; --bg-card:#141414; --bg-input:#1a1a1a;
+      --green:#3D5A3A; --green-light:#4a6e47; --green-glow:rgba(61,90,58,0.2);
+      --accent:#E87B6A; --gold:#C4A87A; --white:#F5F5F0;
+      --gray:#888; --gray-light:#aaa; --border:rgba(196,168,122,0.12);
+      --red:#e05c5c; --orange:#e09a5c; --yellow:#c4a83a; --blue:#5c8fe0; --purple:#9b6ed8;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--white); font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:16px;scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
 
     /* NAV */
-    nav { background: rgba(10,10,10,0.95); border-bottom: 1px solid var(--border); padding: 1rem 0; position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); }
-    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; }
-    .brand { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; letter-spacing: 0.1em; }
-    .brand span { color: var(--gold); }
-    .demo-badge { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(232,123,106,0.35); padding: 0.25rem 0.7rem; border-radius: 2px; }
-    .nav-back { font-size: 0.75rem; color: var(--gray); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
-    .nav-back:hover { color: var(--white); }
+    nav{background:rgba(10,10,10,0.95);border-bottom:1px solid var(--border);padding:1rem 0;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);}
+    .nav-inner{max-width:1180px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;}
+    .brand{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;letter-spacing:0.1em;}
+    .brand span{color:var(--gold);}
+    .demo-badge{font-size:0.62rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(232,123,106,0.35);padding:0.25rem 0.7rem;border-radius:2px;}
+    .nav-back{font-size:0.75rem;color:var(--gray);text-decoration:none;display:flex;align-items:center;gap:0.4rem;transition:color 0.2s;}
+    .nav-back:hover{color:var(--white);}
 
-    /* HERO DEMO */
-    .hero-demo { text-align: center; padding: 3.5rem 2rem 2.5rem; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(61,90,58,0.06) 0%, transparent 100%); }
-    .hero-demo h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 0.75rem; }
-    .hero-demo h1 em { font-style: italic; color: var(--gold); }
-    .hero-demo p { color: var(--gray-light); font-size: 1rem; font-weight: 300; max-width: 540px; margin: 0 auto 1.5rem; line-height: 1.7; }
-    .steps-hint { display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
-    .step-hint { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--gray); }
-    .step-hint .num { width: 20px; height: 20px; border-radius: 50%; background: var(--green); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
-    .step-sep { color: var(--border); font-size: 1.2rem; }
+    /* HERO */
+    .hero-demo{text-align:center;padding:3.5rem 2rem 2.5rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(61,90,58,0.06) 0%,transparent 100%);}
+    .hero-demo h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;margin-bottom:0.75rem;}
+    .hero-demo h1 em{font-style:italic;color:var(--gold);}
+    .hero-demo p{color:var(--gray-light);font-size:1rem;font-weight:300;max-width:580px;margin:0 auto 1.5rem;line-height:1.7;}
+    .steps-hint{display:flex;align-items:center;justify-content:center;gap:0.5rem;flex-wrap:wrap;}
+    .step-hint{display:flex;align-items:center;gap:0.4rem;font-size:0.75rem;color:var(--gray);}
+    .step-hint .num{width:20px;height:20px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;flex-shrink:0;}
+    .step-sep{color:var(--border);font-size:1.2rem;}
+    .v2-pill{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(196,168,122,0.1);border:1px solid rgba(196,168,122,0.25);border-radius:2px;padding:0.2rem 0.75rem;font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
 
     /* LAYOUT */
-    .main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem 4rem; display: grid; grid-template-columns: 1fr 380px; gap: 2rem; align-items: start; }
-    @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
+    .main{max-width:1180px;margin:0 auto;padding:2.5rem 2rem 5rem;display:grid;grid-template-columns:1fr 380px;gap:2rem;align-items:start;}
+    @media(max-width:960px){.main{grid-template-columns:1fr;}}
 
-    /* TABELA */
-    .panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-    .panel-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
-    .panel-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; }
-    .panel-sub { font-size: 0.75rem; color: var(--gray); font-weight: 300; }
+    /* PANELS */
+    .panel{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+    .panel-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;}
+    .panel-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;}
+    .panel-sub{font-size:0.75rem;color:var(--gray);font-weight:300;}
+    .panel-tag{font-size:0.58rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:0.2rem 0.5rem;border-radius:2px;background:rgba(61,90,58,0.2);color:#7bbf78;}
 
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-    thead tr { background: rgba(255,255,255,0.03); }
-    th { padding: 0.65rem 0.75rem; text-align: left; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); white-space: nowrap; border-bottom: 1px solid var(--border); }
-    td { padding: 0.55rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(255,255,255,0.015); }
+    /* TABLE */
+    .table-wrap{overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;font-size:0.8rem;}
+    thead tr{background:rgba(255,255,255,0.03);}
+    th{padding:0.65rem 0.6rem;text-align:left;font-size:0.6rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);white-space:nowrap;border-bottom:1px solid var(--border);}
+    td{padding:0.5rem 0.6rem;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:rgba(255,255,255,0.015);}
+    td input{background:var(--bg-input);border:1px solid rgba(255,255,255,0.06);border-radius:3px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.8rem;padding:0.28rem 0.45rem;width:100%;min-width:58px;outline:none;transition:border-color 0.2s;}
+    td input:focus{border-color:rgba(196,168,122,0.45);}
+    td input[type="text"]{min-width:100px;}
+    td input[type="date"]{min-width:118px;color-scheme:dark;}
 
-    td input { background: var(--bg-input); border: 1px solid rgba(255,255,255,0.06); border-radius: 3px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; padding: 0.3rem 0.5rem; width: 100%; min-width: 60px; outline: none; transition: border-color 0.2s; }
-    td input:focus { border-color: rgba(196,168,122,0.45); }
-    td input[type="text"] { min-width: 110px; }
-    td input[type="date"] { min-width: 120px; color-scheme: dark; }
+    /* BADGES */
+    .abc-badge{font-size:0.62rem;font-weight:700;padding:0.2rem 0.48rem;border-radius:2px;letter-spacing:0.08em;}
+    .abc-a{background:rgba(61,90,58,0.25);color:#7bbf78;}
+    .abc-b{background:rgba(196,168,122,0.15);color:var(--gold);}
+    .abc-c{background:rgba(136,136,136,0.12);color:var(--gray);}
 
-    .abc-badge { font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 2px; letter-spacing: 0.08em; }
-    .abc-a { background: rgba(61,90,58,0.25); color: #7bbf78; }
-    .abc-b { background: rgba(196,168,122,0.15); color: var(--gold); }
-    .abc-c { background: rgba(136,136,136,0.12); color: var(--gray); }
+    .status-pill{font-size:0.6rem;font-weight:600;padding:0.2rem 0.48rem;border-radius:2px;white-space:nowrap;}
+    .s-ok{background:rgba(61,90,58,0.18);color:#7bbf78;}
+    .s-ruptura{background:rgba(224,92,92,0.18);color:#e05c5c;}
+    .s-critico{background:rgba(224,154,92,0.18);color:#e09a5c;}
+    .s-parado{background:rgba(196,168,58,0.15);color:#c4a83a;}
+    .s-excesso{background:rgba(92,143,224,0.15);color:#5c8fe0;}
+    .s-reposicao{background:rgba(224,120,92,0.12);color:#e07a5c;}
 
-    .status-pill { font-size: 0.62rem; font-weight: 600; padding: 0.22rem 0.55rem; border-radius: 2px; white-space: nowrap; }
-    .s-ok { background: rgba(61,90,58,0.18); color: #7bbf78; }
-    .s-ruptura { background: rgba(224,92,92,0.18); color: #e05c5c; }
-    .s-critico { background: rgba(224,154,92,0.18); color: #e09a5c; }
-    .s-parado { background: rgba(196,168,58,0.15); color: #c4a83a; }
-    .s-excesso { background: rgba(92,143,224,0.15); color: #5c8fe0; }
-    .s-reposicao { background: rgba(224,92,92,0.12); color: #e07a5c; }
+    /* TREND BADGES */
+    .trend-pill{font-size:0.58rem;font-weight:600;padding:0.18rem 0.42rem;border-radius:2px;white-space:nowrap;display:inline-block;}
+    .t-alta{background:rgba(61,90,58,0.22);color:#7bbf78;}
+    .t-baixa{background:rgba(224,92,92,0.15);color:#e05c5c;}
+    .t-estavel{background:rgba(196,168,122,0.12);color:var(--gold);}
+    .t-nd{background:rgba(136,136,136,0.1);color:var(--gray);}
+    .risco-sazon{font-size:0.55rem;font-weight:700;padding:0.12rem 0.35rem;border-radius:2px;background:rgba(155,110,216,0.2);color:#b48fec;margin-left:3px;letter-spacing:0.06em;text-transform:uppercase;}
 
-    .btn-add { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); background: rgba(196,168,122,0.08); border: 1px solid var(--border); border-radius: 3px; padding: 0.45rem 1rem; cursor: pointer; transition: all 0.2s; }
-    .btn-add:hover { background: rgba(196,168,122,0.14); border-color: var(--gold); }
-    .btn-del { background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1rem; line-height: 1; padding: 0.2rem 0.4rem; border-radius: 2px; transition: color 0.15s; }
-    .btn-del:hover { color: var(--red); }
+    /* RFM BADGES */
+    .rfm-pill{font-size:0.6rem;font-weight:600;padding:0.2rem 0.48rem;border-radius:2px;white-space:nowrap;}
+    .rfm-champion{background:rgba(61,90,58,0.25);color:#7bbf78;}
+    .rfm-leal{background:rgba(196,168,122,0.18);color:var(--gold);}
+    .rfm-potencial{background:rgba(92,143,224,0.15);color:#5c8fe0;}
+    .rfm-risco{background:rgba(224,154,92,0.18);color:#e09a5c;}
+    .rfm-perdido{background:rgba(224,92,92,0.15);color:#e05c5c;}
+    .rfm-novo{background:rgba(155,110,216,0.18);color:#b48fec;}
 
-    .table-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+    /* BUTTONS */
+    .btn-add{display:flex;align-items:center;gap:0.4rem;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);background:rgba(196,168,122,0.08);border:1px solid var(--border);border-radius:3px;padding:0.45rem 1rem;cursor:pointer;transition:all 0.2s;}
+    .btn-add:hover{background:rgba(196,168,122,0.14);border-color:var(--gold);}
+    .btn-del{background:none;border:none;color:var(--gray);cursor:pointer;font-size:1rem;line-height:1;padding:0.2rem 0.4rem;border-radius:2px;transition:color 0.15s;}
+    .btn-del:hover{color:var(--red);}
+    .table-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;}
+    .btn-analisar{display:flex;align-items:center;justify-content:center;gap:0.6rem;background:var(--green);color:var(--white);border:none;border-radius:3px;padding:0.9rem 2rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;}
+    .btn-analisar:hover{background:var(--green-light);transform:translateY(-1px);box-shadow:0 8px 24px rgba(61,90,58,0.45);}
+    .btn-analisar:active{transform:translateY(0);}
+    .btn-analisar.loading{opacity:0.7;pointer-events:none;}
 
-    /* BTN ANALISAR */
-    .btn-analisar { display: flex; align-items: center; justify-content: center; gap: 0.6rem; background: var(--green); color: var(--white); border: none; border-radius: 3px; padding: 0.9rem 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.25s; width: 100%; }
-    .btn-analisar:hover { background: var(--green-light); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(61,90,58,0.45); }
-    .btn-analisar:active { transform: translateY(0); }
-    .btn-analisar.loading { opacity: 0.7; pointer-events: none; }
+    /* RIGHT COL */
+    .right-col{display:flex;flex-direction:column;gap:1.25rem;}
+    .section-label-sm{font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;display:block;}
 
-    /* PAINEL DIREITO */
-    .right-col { display: flex; flex-direction: column; gap: 1.25rem; }
-
-    /* KPI CARDS */
-    .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .kpi-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 5px; padding: 1rem 1.1rem; }
-    .kpi-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.4rem; }
-    .kpi-val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; line-height: 1; }
-    .kpi-val.red { color: var(--red); }
-    .kpi-val.orange { color: var(--orange); }
-    .kpi-val.gold { color: var(--gold); }
-    .kpi-val.green { color: #7bbf78; }
-    .kpi-sub { font-size: 0.68rem; color: var(--gray); margin-top: 0.3rem; }
+    /* KPI */
+    .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+    .kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:5px;padding:0.9rem 1rem;}
+    .kpi-label{font-size:0.58rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);margin-bottom:0.35rem;}
+    .kpi-val{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;line-height:1;}
+    .kpi-val.red{color:var(--red);}
+    .kpi-val.orange{color:var(--orange);}
+    .kpi-val.gold{color:var(--gold);}
+    .kpi-val.green{color:#7bbf78;}
+    .kpi-val.purple{color:#b48fec;}
+    .kpi-sub{font-size:0.64rem;color:var(--gray);margin-top:0.25rem;}
 
     /* ALERTAS */
-    .alertas-list { display: flex; flex-direction: column; gap: 0.5rem; }
-    .alerta-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 0.75rem 1rem; display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.8rem; }
-    .alerta-item.ruptura { border-left: 2px solid var(--red); }
-    .alerta-item.critico { border-left: 2px solid var(--orange); }
-    .alerta-item.parado { border-left: 2px solid var(--yellow); }
-    .alerta-item.excesso { border-left: 2px solid var(--blue); }
-    .alerta-item.reposicao { border-left: 2px solid #e07a5c; }
-    .alerta-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
-    .alerta-item.ruptura .alerta-dot { background: var(--red); }
-    .alerta-item.critico .alerta-dot { background: var(--orange); }
-    .alerta-item.parado .alerta-dot { background: var(--yellow); }
-    .alerta-item.excesso .alerta-dot { background: var(--blue); }
-    .alerta-item.reposicao .alerta-dot { background: #e07a5c; }
-    .alerta-nome { font-weight: 600; color: var(--white); }
-    .alerta-desc { color: var(--gray-light); font-size: 0.75rem; margin-top: 0.1rem; font-weight: 300; }
+    .alertas-list{display:flex;flex-direction:column;gap:0.5rem;}
+    .alerta-item{background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:0.7rem 0.9rem;display:flex;align-items:flex-start;gap:0.6rem;font-size:0.78rem;}
+    .alerta-item.ruptura{border-left:2px solid var(--red);}
+    .alerta-item.critico{border-left:2px solid var(--orange);}
+    .alerta-item.parado{border-left:2px solid var(--yellow);}
+    .alerta-item.excesso{border-left:2px solid var(--blue);}
+    .alerta-item.reposicao{border-left:2px solid #e07a5c;}
+    .alerta-item.risco-saz{border-left:2px solid #b48fec;}
+    .alerta-item.rfm-churn{border-left:2px solid var(--orange);}
+    .alerta-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+    .alerta-item.ruptura .alerta-dot{background:var(--red);}
+    .alerta-item.critico .alerta-dot{background:var(--orange);}
+    .alerta-item.parado .alerta-dot{background:var(--yellow);}
+    .alerta-item.excesso .alerta-dot{background:var(--blue);}
+    .alerta-item.reposicao .alerta-dot{background:#e07a5c;}
+    .alerta-item.risco-saz .alerta-dot{background:#b48fec;}
+    .alerta-item.rfm-churn .alerta-dot{background:var(--orange);}
+    .alerta-nome{font-weight:600;color:var(--white);}
+    .alerta-desc{color:var(--gray-light);font-size:0.73rem;margin-top:0.1rem;font-weight:300;}
 
-    /* WHATSAPP MOCKUP */
-    .wa-mockup { background: #161616; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; overflow: hidden; }
-    .wa-header { background: #1f2c1f; padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .wa-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; color: var(--white); flex-shrink: 0; }
-    .wa-name { font-size: 0.85rem; font-weight: 600; }
-    .wa-status { font-size: 0.65rem; color: #7bbf78; }
-    .wa-body { padding: 1rem; }
-    .wa-bubble { background: #1f2f1f; border-radius: 0 10px 10px 10px; padding: 0.9rem 1rem; font-size: 0.78rem; line-height: 1.7; color: #e8e8e8; white-space: pre-wrap; font-family: -apple-system, sans-serif; word-break: break-word; }
-    .wa-time { text-align: right; font-size: 0.62rem; color: var(--gray); margin-top: 0.4rem; }
-
-    /* ESTADO VAZIO */
-    .empty-state { text-align: center; padding: 3rem 1.5rem; color: var(--gray); }
-    .empty-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.4; }
-    .empty-state p { font-size: 0.85rem; font-weight: 300; line-height: 1.6; }
-
-    /* PLACEHOLDER ANIMADO */
-    @keyframes shimmer { 0% { opacity: 0.4; } 50% { opacity: 0.8; } 100% { opacity: 0.4; } }
-    .shimmer { animation: shimmer 1.5s ease-in-out infinite; }
-
-    .section-label-sm { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; display: block; }
+    /* WHATSAPP */
+    .wa-mockup{background:#161616;border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;}
+    .wa-header{background:#1f2c1f;padding:0.85rem 1rem;display:flex;align-items:center;gap:0.75rem;border-bottom:1px solid rgba(255,255,255,0.05);}
+    .wa-avatar{width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:0.62rem;font-weight:700;color:var(--white);flex-shrink:0;}
+    .wa-name{font-size:0.85rem;font-weight:600;}
+    .wa-status{font-size:0.65rem;color:#7bbf78;}
+    .wa-body{padding:1rem;}
+    .wa-bubble{background:#1f2f1f;border-radius:0 10px 10px 10px;padding:0.9rem 1rem;font-size:0.75rem;line-height:1.7;color:#e8e8e8;white-space:pre-wrap;font-family:-apple-system,sans-serif;word-break:break-word;max-height:420px;overflow-y:auto;}
+    .wa-time{text-align:right;font-size:0.62rem;color:var(--gray);margin-top:0.4rem;}
 
     /* SHARE */
-    .share-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-    .btn-share { flex: 1; min-width: 120px; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.7rem 1rem; border-radius: 3px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; text-decoration: none; }
-    .btn-wa { background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.3); color: #25d366; }
-    .btn-wa:hover { background: rgba(37,211,102,0.2); }
-    .btn-copy { background: rgba(196,168,122,0.1); border: 1px solid var(--border); color: var(--gold); }
-    .btn-copy:hover { background: rgba(196,168,122,0.18); }
+    .share-bar{display:flex;gap:0.75rem;flex-wrap:wrap;}
+    .btn-share{flex:1;min-width:120px;display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.7rem 1rem;border-radius:3px;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;text-decoration:none;}
+    .btn-wa{background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);color:#25d366;}
+    .btn-wa:hover{background:rgba(37,211,102,0.2);}
+    .btn-copy{background:rgba(196,168,122,0.1);border:1px solid var(--border);color:var(--gold);}
+    .btn-copy:hover{background:rgba(196,168,122,0.18);}
+
+    @keyframes shimmer{0%{opacity:0.4;}50%{opacity:0.8;}100%{opacity:0.4;}}
+    .shimmer{animation:shimmer 1.5s ease-in-out infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    .left-col{display:flex;flex-direction:column;gap:1.25rem;}
   </style>
 </head>
 <body>
@@ -159,58 +178,76 @@
 </nav>
 
 <div class="hero-demo">
-  <h1>Veja o GIRO <em>analisando</em> seu estoque</h1>
-  <p>Insira os dados reais da sua loja. Clique em "Rodar Análise" e veja exatamente o que você receberia no WhatsApp toda segunda-feira.</p>
+  <div class="v2-pill">Novo — Sazonalidade + Análise de Clientes</div>
+  <h1>Veja o GIRO <em>analisando</em> seu negócio completo</h1>
+  <p>Insira estoque e clientes reais. O GIRO detecta sazonalidade, classifica clientes por RFM e entrega tudo no WhatsApp toda segunda-feira.</p>
   <div class="steps-hint">
-    <div class="step-hint"><div class="num">1</div> Edite os dados da tabela</div>
+    <div class="step-hint"><div class="num">1</div> Edite estoque e clientes</div>
     <div class="step-sep">›</div>
     <div class="step-hint"><div class="num">2</div> Clique em Rodar Análise</div>
     <div class="step-sep">›</div>
-    <div class="step-hint"><div class="num">3</div> Veja o relatório gerado</div>
+    <div class="step-hint"><div class="num">3</div> Veja o relatório WhatsApp</div>
   </div>
 </div>
 
 <div class="main">
 
-  <!-- COLUNA ESQUERDA: TABELA -->
-  <div style="display:flex;flex-direction:column;gap:1.25rem;">
+  <!-- COLUNA ESQUERDA -->
+  <div class="left-col">
 
+    <!-- TABELA ESTOQUE -->
     <div class="panel">
       <div class="panel-header">
         <div>
           <div class="panel-title">Planilha de Estoque</div>
-          <div class="panel-sub">Edite com os dados reais da sua loja — ou use os dados de exemplo abaixo</div>
+          <div class="panel-sub">Edite com os dados reais. V.30d e V.90d = vendas dos últimos 30 e 90 dias.</div>
         </div>
+        <span class="panel-tag">Sazonalidade ativo</span>
       </div>
-
       <div class="table-wrap">
         <table id="stockTable">
           <thead>
             <tr>
-              <th>Produto</th>
-              <th>SKU</th>
-              <th>Estoque</th>
-              <th>Mín.</th>
-              <th>Custo R$</th>
-              <th>Venda R$</th>
-              <th>V.30d</th>
-              <th>V.90d</th>
-              <th>Últ. Venda</th>
-              <th>ABC</th>
-              <th>Status</th>
-              <th></th>
+              <th>Produto</th><th>SKU</th><th>Estoque</th><th>Mín.</th>
+              <th>Custo</th><th>Venda</th><th>V.30d</th><th>V.90d</th>
+              <th>Últ. Venda</th><th>ABC</th><th>Status</th><th>Tendência</th><th></th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
         </table>
       </div>
-
       <div class="table-footer">
-        <button class="btn-add" onclick="addRow()">+ Adicionar produto</button>
+        <button class="btn-add" onclick="addRow()">+ Produto</button>
         <button class="btn-analisar" id="btnAnalise" onclick="rodarAnalise()" style="width:auto;padding:0.65rem 1.5rem;">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v12M3 7l5-5 5 5"/></svg>
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v12M3 7l5-5 5 5"/></svg>
           Rodar Análise
         </button>
+      </div>
+    </div>
+
+    <!-- TABELA CLIENTES -->
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">Análise de Clientes — RFM</div>
+          <div class="panel-sub">Recência · Frequência · Valor. O GIRO identifica quem está sumindo antes que você perceba.</div>
+        </div>
+        <span class="panel-tag">Novo</span>
+      </div>
+      <div class="table-wrap">
+        <table id="clientTable">
+          <thead>
+            <tr>
+              <th>Nome</th><th>Última compra</th><th>Qtd. compras</th>
+              <th>Valor total R$</th><th>Classificação</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="clientBody"></tbody>
+        </table>
+      </div>
+      <div class="table-footer">
+        <button class="btn-add" onclick="addCliente()">+ Cliente</button>
+        <div style="font-size:0.7rem;color:var(--gray);">Classificado automaticamente na análise</div>
       </div>
     </div>
 
@@ -233,11 +270,13 @@
     <!-- KPIs -->
     <div>
       <span class="section-label-sm">Painel executivo</span>
-      <div class="kpi-grid" id="kpiGrid">
-        <div class="kpi-card"><div class="kpi-label">Produtos</div><div class="kpi-val" id="k-total" style="color:var(--white)">—</div></div>
-        <div class="kpi-card"><div class="kpi-label">Fat. 30 dias</div><div class="kpi-val gold" id="k-fat">—</div></div>
-        <div class="kpi-card"><div class="kpi-label">Capital parado</div><div class="kpi-val orange" id="k-parado">—</div></div>
-        <div class="kpi-card"><div class="kpi-label">Rupturas</div><div class="kpi-val red" id="k-rupt">—</div></div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Produtos</div><div class="kpi-val" id="k-total" style="color:var(--white)">—</div><div class="kpi-sub" id="k-total-sub">aguardando análise</div></div>
+        <div class="kpi-card"><div class="kpi-label">Fat. 30 dias</div><div class="kpi-val gold" id="k-fat">—</div><div class="kpi-sub" id="k-fat-sub">faturamento estimado</div></div>
+        <div class="kpi-card"><div class="kpi-label">Capital parado</div><div class="kpi-val orange" id="k-parado">—</div><div class="kpi-sub" id="k-parado-sub">em produtos sem venda</div></div>
+        <div class="kpi-card"><div class="kpi-label">Rupturas</div><div class="kpi-val red" id="k-rupt">—</div><div class="kpi-sub" id="k-rupt-sub">estoque zerado c/ demanda</div></div>
+        <div class="kpi-card"><div class="kpi-label">Alta temporada</div><div class="kpi-val green" id="k-alta">—</div><div class="kpi-sub" id="k-alta-sub">produtos acelerando +30%</div></div>
+        <div class="kpi-card"><div class="kpi-label">Clientes em risco</div><div class="kpi-val purple" id="k-risco-cli">—</div><div class="kpi-sub" id="k-risco-sub">sumindo sem alerta</div></div>
       </div>
     </div>
 
@@ -250,22 +289,22 @@
           <div><div class="wa-name">GIRO — Inteligência de Estoque</div><div class="wa-status">online</div></div>
         </div>
         <div class="wa-body">
-          <div class="wa-bubble" id="waBubble"><span class="shimmer" style="color:var(--gray);font-style:italic;">Insira seus dados e clique em "Rodar Análise" para ver o relatório que você receberia no WhatsApp toda segunda-feira...</span></div>
+          <div class="wa-bubble" id="waBubble"><span class="shimmer" style="color:var(--gray);font-style:italic;">Insira seus dados e clique em "Rodar Análise" para ver o relatório que chegaria no seu WhatsApp toda segunda-feira...</span></div>
           <div class="wa-time" id="waTime" style="opacity:0.4;">agora</div>
         </div>
       </div>
     </div>
 
-    <!-- COMPARTILHAR -->
+    <!-- SHARE -->
     <div id="shareArea" style="display:none;">
       <span class="section-label-sm">Compartilhar análise</span>
       <div class="share-bar">
         <a id="btnWa" href="#" target="_blank" class="btn-share btn-wa">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.826L.055 23.455a.75.75 0 0 0 .921.921l5.637-1.466A11.956 11.956 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.88 0-3.632-.516-5.127-1.41l-.368-.22-3.797.987.999-3.687-.241-.383A10.002 10.002 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.826L.055 23.455a.75.75 0 0 0 .921.921l5.637-1.466A11.956 11.956 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.88 0-3.632-.516-5.127-1.41l-.368-.22-3.797.987.999-3.687-.241-.383A10.002 10.002 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
           Enviar no WhatsApp
         </a>
         <button class="btn-share btn-copy" onclick="copiarRelatorio()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           Copiar texto
         </button>
       </div>
@@ -274,7 +313,7 @@
     <!-- CTA -->
     <div style="background:linear-gradient(135deg,rgba(61,90,58,0.15),rgba(61,90,58,0.05));border:1px solid rgba(61,90,58,0.3);border-radius:6px;padding:1.5rem;text-align:center;">
       <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;margin-bottom:0.5rem;">Quer isso toda semana?</div>
-      <p style="color:var(--gray-light);font-size:0.82rem;font-weight:300;margin-bottom:1.25rem;line-height:1.6;">Implantamos em 24h. Na segunda-feira seguinte o relatório já chega no seu WhatsApp.</p>
+      <p style="color:var(--gray-light);font-size:0.82rem;font-weight:300;margin-bottom:1.25rem;line-height:1.6;">Implantamos em 24h. Na segunda-feira seguinte o relatório já chega no seu WhatsApp — com estoque, sazonalidade e clientes.</p>
       <a href="https://wa.me/5531991876584?text=Vi%20a%20demo%20do%20GIRO%20e%20quero%20implantar" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;background:var(--green);color:var(--white);padding:0.8rem 1.75rem;border-radius:3px;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#4a6e47'" onmouseout="this.style.background='#3D5A3A'">
         Quero implantar o GIRO
       </a>
@@ -284,57 +323,101 @@
 </div>
 
 <script>
-// ─── DADOS DE EXEMPLO ───────────────────────────────────────────────────────
-const exemploData = [
-  { produto:'Camiseta Básica Branca', sku:'CAM-001', estoque:8, min:20, custo:25, venda:79.9, v30:42, v90:115, ultima:'2026-04-30' },
-  { produto:'Calça Jeans Slim 42', sku:'CAL-042', estoque:0, min:5, custo:80, venda:199.9, v30:18, v90:48, ultima:'2026-05-05' },
-  { produto:'Tênis Running Preto', sku:'TEN-RUN', estoque:3, min:8, custo:120, venda:349.9, v30:14, v90:39, ultima:'2026-05-06' },
-  { produto:'Mochila Urban 20L', sku:'MOC-020', estoque:47, min:5, custo:55, venda:149.9, v30:2, v90:4, ultima:'2026-03-10' },
-  { produto:'Meias Kit 3 Pares', sku:'MEI-KIT', estoque:120, min:30, custo:8, venda:29.9, v30:55, v90:162, ultima:'2026-05-07' },
-  { produto:'Blusa Moletom Feminina', sku:'BLU-MOL', estoque:6, min:10, custo:45, venda:129.9, v30:9, v90:25, ultima:'2026-05-04' },
-  { produto:'Short Tactel', sku:'SHO-TAC', estoque:88, min:15, custo:18, venda:49.9, v30:0, v90:0, ultima:'2026-01-20' },
-  { produto:'Boné Snapback', sku:'BON-SNP', estoque:22, min:8, custo:22, venda:69.9, v30:11, v90:30, ultima:'2026-05-01' },
+// ── DADOS EXEMPLO ESTOQUE ────────────────────────────────────────────────────
+const exemploEstoque = [
+  { produto:'Camiseta Básica Branca', sku:'CAM-001', estoque:8,  min:20, custo:25,  venda:79.9,  v30:42, v90:85,  ultima:'2026-04-30' },
+  { produto:'Calça Jeans Slim 42',    sku:'CAL-042', estoque:0,  min:5,  custo:80,  venda:199.9, v30:18, v90:36,  ultima:'2026-05-05' },
+  { produto:'Tênis Running Preto',    sku:'TEN-RUN', estoque:3,  min:8,  custo:120, venda:349.9, v30:14, v90:28,  ultima:'2026-05-06' },
+  { produto:'Mochila Urban 20L',      sku:'MOC-020', estoque:47, min:5,  custo:55,  venda:149.9, v30:2,  v90:18,  ultima:'2026-03-10' },
+  { produto:'Meias Kit 3 Pares',      sku:'MEI-KIT', estoque:120,min:30, custo:8,   venda:29.9,  v30:55, v90:115, ultima:'2026-05-07' },
+  { produto:'Blusa Moletom Feminina', sku:'BLU-MOL', estoque:6,  min:10, custo:45,  venda:129.9, v30:9,  v90:19,  ultima:'2026-05-04' },
+  { produto:'Short Tactel',           sku:'SHO-TAC', estoque:88, min:15, custo:18,  venda:49.9,  v30:0,  v90:0,   ultima:'2026-01-20' },
+  { produto:'Boné Snapback',          sku:'BON-SNP', estoque:22, min:8,  custo:22,  venda:69.9,  v30:11, v90:30,  ultima:'2026-05-01' },
 ];
 
-let linhas = exemploData.map(d => ({...d}));
+// ── DADOS EXEMPLO CLIENTES ───────────────────────────────────────────────────
+const exemploClientes = [
+  { nome:'Maria Santos',   ultima:'2026-05-06', compras:12, valor:2840 },
+  { nome:'João Oliveira',  ultima:'2026-04-15', compras:8,  valor:1920 },
+  { nome:'Ana Costa',      ultima:'2026-03-02', compras:6,  valor:980  },
+  { nome:'Paulo Lima',     ultima:'2026-01-10', compras:4,  valor:560  },
+  { nome:'Carla Nunes',    ultima:'2026-05-05', compras:2,  valor:320  },
+  { nome:'Marcos Alves',   ultima:'2025-11-20', compras:3,  valor:440  },
+  { nome:'Luiza Melo',     ultima:'2026-05-07', compras:1,  valor:189  },
+  { nome:'Fernanda Reis',  ultima:'2026-04-28', compras:5,  valor:750  },
+];
+
+let linhas    = exemploEstoque.map(d => ({...d}));
+let clientes  = exemploClientes.map(d => ({...d}));
 let relatorioGerado = '';
 
-// ─── RENDERIZAR TABELA ───────────────────────────────────────────────────────
-function renderTabela(comKpis = false) {
-  const tbody = document.getElementById('tableBody');
+// ── SAZONALIDADE ─────────────────────────────────────────────────────────────
+function calcTendencia(v30, v90) {
+  if (!v90 || v90 === 0) return { label:'Sem dado', cls:'t-nd', trend:'ND', vel:0 };
+  const mediaM = v90 / 3;
+  const ratio  = v30 / mediaM;
+  const vel    = Math.round((ratio - 1) * 100); // % variação vs média
+  if (ratio >= 1.3) return { label:`↑ Alta +${vel}%`,   cls:'t-alta',   trend:'ALTA',   vel };
+  if (ratio <= 0.7) return { label:`↓ Baixa ${vel}%`,   cls:'t-baixa',  trend:'BAIXA',  vel };
+  return              { label:`→ Estável ${vel>0?'+':''}${vel}%`, cls:'t-estavel', trend:'ESTAVEL', vel };
+}
+
+// ── RFM ──────────────────────────────────────────────────────────────────────
+function calcRFM(c, maxCompras, maxValor) {
   const hoje = new Date();
+  const dias  = c.ultima ? Math.floor((hoje - new Date(c.ultima)) / 86400000) : 999;
 
+  // Scores 1-5
+  const R = dias <= 14 ? 5 : dias <= 30 ? 4 : dias <= 60 ? 3 : dias <= 90 ? 2 : 1;
+  const F = maxCompras > 0 ? Math.ceil((c.compras / maxCompras) * 5) : 1;
+  const M = maxValor   > 0 ? Math.ceil((c.valor   / maxValor)   * 5) : 1;
+  const score = R * 0.4 + F * 0.3 + M * 0.3;
+
+  let cls, label, em_risco = false;
+  if (R >= 4 && F >= 4 && M >= 4)          { cls='rfm-champion'; label='Champion'; }
+  else if (F >= 4 && R >= 3)               { cls='rfm-leal';     label='Leal'; }
+  else if (R >= 4 && F <= 2)               { cls='rfm-novo';     label='Novo Potencial'; }
+  else if (R <= 2 && F >= 3)               { cls='rfm-perdido';  label='Perdido'; em_risco=true; }
+  else if (R === 3 && F >= 2)              { cls='rfm-risco';    label='Em Risco'; em_risco=true; }
+  else if (R <= 2 && F <= 2)               { cls='rfm-perdido';  label='Dormente'; }
+  else                                      { cls='rfm-potencial';label='Potencial'; }
+
+  return { R, F, M, score, cls, label, em_risco, dias };
+}
+
+// ── RENDERIZAR TABELA ESTOQUE ─────────────────────────────────────────────────
+function renderEstoque(comKpis = false) {
+  const tbody = document.getElementById('tableBody');
+  const hoje  = new Date();
   tbody.innerHTML = linhas.map((l, i) => {
-    let abc = '—', status = 'normal', statusClass = 's-ok', statusLabel = 'Normal';
-
+    let abc='—', statusClass='s-ok', statusLabel='Normal', tendHtml='—';
     if (comKpis) {
-      // ABC calculado depois — aqui placeholder
       abc = l._abc || '—';
-      const diasSem = l.ultima ? Math.floor((hoje - new Date(l.ultima)) / 86400000) : 999;
-      const cobertura = l.v30 > 0 ? Math.round(l.estoque / (l.v30/30)) : 999;
-
-      if (l.estoque === 0 && l.v30 > 0) { status='ruptura'; statusClass='s-ruptura'; statusLabel='Ruptura'; }
-      else if (l.estoque > 0 && l.estoque < l.min) { status='critico'; statusClass='s-critico'; statusLabel='Crítico'; }
-      else if (diasSem > 90 && l.estoque > 0) { status='parado'; statusClass='s-parado'; statusLabel='Parado'; }
-      else if (cobertura > 120) { status='excesso'; statusClass='s-excesso'; statusLabel='Excesso'; }
-      else if (cobertura < 15 && l.v30 > 0) { status='reposicao'; statusClass='s-reposicao'; statusLabel='Repor'; }
-      else { statusLabel = 'Normal'; }
+      const diasSem  = l.ultima ? Math.floor((hoje - new Date(l.ultima)) / 86400000) : 999;
+      const cobertura= l.v30 > 0 ? Math.round(l.estoque / (l.v30/30)) : 999;
+      if      (l.estoque === 0 && l.v30 > 0)     { statusClass='s-ruptura'; statusLabel='Ruptura'; }
+      else if (l.estoque > 0 && l.estoque < l.min){ statusClass='s-critico'; statusLabel='Crítico'; }
+      else if (diasSem > 90 && l.estoque > 0)     { statusClass='s-parado';  statusLabel='Parado'; }
+      else if (cobertura > 120)                   { statusClass='s-excesso'; statusLabel='Excesso'; }
+      else if (cobertura < 15 && l.v30 > 0)       { statusClass='s-reposicao'; statusLabel='Repor'; }
+      const t = calcTendencia(l.v30, l.v90);
+      const rsHtml = l._riscoSazon ? `<span class="risco-sazon">Risco</span>` : '';
+      tendHtml = `<span class="trend-pill ${t.cls}">${t.label}</span>${rsHtml}`;
     }
-
-    const abcClass = abc === 'A' ? 'abc-a' : abc === 'B' ? 'abc-b' : abc === 'C' ? 'abc-c' : '';
-
+    const abcClass = abc==='A'?'abc-a':abc==='B'?'abc-b':abc==='C'?'abc-c':'';
     return `<tr>
-      <td><input type="text" value="${l.produto}" onchange="linhas[${i}].produto=this.value" /></td>
-      <td><input type="text" value="${l.sku}" onchange="linhas[${i}].sku=this.value" style="min-width:80px;" /></td>
-      <td><input type="number" value="${l.estoque}" onchange="linhas[${i}].estoque=+this.value" style="min-width:55px;" /></td>
-      <td><input type="number" value="${l.min}" onchange="linhas[${i}].min=+this.value" style="min-width:50px;" /></td>
-      <td><input type="number" value="${l.custo}" onchange="linhas[${i}].custo=+this.value" style="min-width:60px;" /></td>
-      <td><input type="number" value="${l.venda}" onchange="linhas[${i}].venda=+this.value" style="min-width:65px;" /></td>
-      <td><input type="number" value="${l.v30}" onchange="linhas[${i}].v30=+this.value" style="min-width:50px;" /></td>
-      <td><input type="number" value="${l.v90}" onchange="linhas[${i}].v90=+this.value" style="min-width:50px;" /></td>
-      <td><input type="date" value="${l.ultima||''}" onchange="linhas[${i}].ultima=this.value" /></td>
-      <td>${comKpis && abc !== '—' ? `<span class="abc-badge ${abcClass}">${abc}</span>` : '<span style="color:var(--gray);font-size:0.72rem;">—</span>'}</td>
-      <td>${comKpis ? `<span class="status-pill ${statusClass}">${statusLabel}</span>` : '<span style="color:var(--gray);font-size:0.72rem;">—</span>'}</td>
+      <td><input type="text"   value="${l.produto}" onchange="linhas[${i}].produto=this.value"/></td>
+      <td><input type="text"   value="${l.sku}"     onchange="linhas[${i}].sku=this.value" style="min-width:78px;"/></td>
+      <td><input type="number" value="${l.estoque}" onchange="linhas[${i}].estoque=+this.value" style="min-width:52px;"/></td>
+      <td><input type="number" value="${l.min}"     onchange="linhas[${i}].min=+this.value"     style="min-width:48px;"/></td>
+      <td><input type="number" value="${l.custo}"   onchange="linhas[${i}].custo=+this.value"   style="min-width:58px;"/></td>
+      <td><input type="number" value="${l.venda}"   onchange="linhas[${i}].venda=+this.value"   style="min-width:62px;"/></td>
+      <td><input type="number" value="${l.v30}"     onchange="linhas[${i}].v30=+this.value"     style="min-width:48px;"/></td>
+      <td><input type="number" value="${l.v90}"     onchange="linhas[${i}].v90=+this.value"     style="min-width:48px;"/></td>
+      <td><input type="date"   value="${l.ultima||''}" onchange="linhas[${i}].ultima=this.value"/></td>
+      <td>${comKpis && abc!=='—' ? `<span class="abc-badge ${abcClass}">${abc}</span>` : '<span style="color:var(--gray);font-size:0.7rem;">—</span>'}</td>
+      <td>${comKpis ? `<span class="status-pill ${statusClass}">${statusLabel}</span>` : '<span style="color:var(--gray);font-size:0.7rem;">—</span>'}</td>
+      <td style="min-width:110px;">${comKpis ? tendHtml : '<span style="color:var(--gray);font-size:0.7rem;">—</span>'}</td>
       <td><button class="btn-del" onclick="removerLinha(${i})" title="Remover">×</button></td>
     </tr>`;
   }).join('');
@@ -342,156 +425,68 @@ function renderTabela(comKpis = false) {
 
 function addRow() {
   linhas.push({ produto:'Novo Produto', sku:'SKU-000', estoque:10, min:5, custo:30, venda:89.9, v30:5, v90:15, ultima:new Date().toISOString().split('T')[0] });
-  renderTabela();
-  const tbody = document.getElementById('tableBody');
-  const lastRow = tbody.lastElementChild;
-  if (lastRow) lastRow.querySelector('input').focus();
+  renderEstoque();
+  document.getElementById('tableBody').lastElementChild?.querySelector('input')?.focus();
+}
+function removerLinha(i) { linhas.splice(i, 1); renderEstoque(); }
+
+// ── RENDERIZAR TABELA CLIENTES ────────────────────────────────────────────────
+function renderClientes(comKpis = false) {
+  const tbody = document.getElementById('clientBody');
+  const maxC  = Math.max(...clientes.map(c => c.compras));
+  const maxV  = Math.max(...clientes.map(c => c.valor));
+  tbody.innerHTML = clientes.map((c, i) => {
+    let rfmHtml = '<span style="color:var(--gray);font-size:0.7rem;">—</span>';
+    if (comKpis) {
+      const rfm = calcRFM(c, maxC, maxV);
+      rfmHtml = `<span class="rfm-pill ${rfm.cls}">${rfm.label}</span>`;
+    }
+    return `<tr>
+      <td><input type="text"   value="${c.nome}"    onchange="clientes[${i}].nome=this.value"/></td>
+      <td><input type="date"   value="${c.ultima||''}" onchange="clientes[${i}].ultima=this.value"/></td>
+      <td><input type="number" value="${c.compras}" onchange="clientes[${i}].compras=+this.value" style="min-width:70px;"/></td>
+      <td><input type="number" value="${c.valor}"   onchange="clientes[${i}].valor=+this.value"   style="min-width:80px;"/></td>
+      <td>${rfmHtml}</td>
+      <td><button class="btn-del" onclick="removerCliente(${i})" title="Remover">×</button></td>
+    </tr>`;
+  }).join('');
 }
 
-function removerLinha(i) {
-  linhas.splice(i, 1);
-  renderTabela();
+function addCliente() {
+  clientes.push({ nome:'Novo Cliente', ultima:new Date().toISOString().split('T')[0], compras:1, valor:100 });
+  renderClientes();
 }
+function removerCliente(i) { clientes.splice(i, 1); renderClientes(); }
 
-// ─── MOTOR DE ANÁLISE ────────────────────────────────────────────────────────
+// ── MOTOR DE ANÁLISE COMPLETO ─────────────────────────────────────────────────
 function rodarAnalise() {
   const btn = document.getElementById('btnAnalise');
   btn.classList.add('loading');
-  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="animation:spin 0.8s linear infinite;"><path d="M8 2a6 6 0 1 1-4.24 1.76"/></svg> Analisando...`;
+  btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="animation:spin 0.8s linear infinite;"><path d="M8 2a6 6 0 1 1-4.24 1.76"/></svg> Analisando...`;
 
   setTimeout(() => {
-    const hoje = new Date();
-    const dataStr = hoje.toLocaleDateString('pt-BR');
+    const hoje   = new Date();
+    const dataStr= hoje.toLocaleDateString('pt-BR');
 
-    // Calcular métricas
-    const processados = linhas.map(l => {
-      const diasSem = l.ultima ? Math.floor((hoje - new Date(l.ultima)) / 86400000) : 999;
+    // ── ESTOQUE ──
+    const proc = linhas.map(l => {
+      const diasSem   = l.ultima ? Math.floor((hoje - new Date(l.ultima)) / 86400000) : 999;
       const cobertura = l.v30 > 0 ? Math.round(l.estoque / (l.v30/30)) : 999;
-      const fat30 = l.v30 * l.venda;
-      const capitalParado = (diasSem > 90 && l.estoque > 0) ? l.estoque * l.custo : 0;
+      const fat30     = l.v30 * l.venda;
+      const capParado = diasSem > 90 && l.estoque > 0 ? l.estoque * l.custo : 0;
+      const tend      = calcTendencia(l.v30, l.v90);
       let status = 'normal';
-      if (l.estoque === 0 && l.v30 > 0) status = 'ruptura';
-      else if (l.estoque > 0 && l.estoque < l.min) status = 'critico';
-      else if (diasSem > 90 && l.estoque > 0) status = 'parado';
-      else if (cobertura > 120) status = 'excesso';
-      else if (cobertura < 15 && l.v30 > 0) status = 'reposicao';
-      return { ...l, fat30, capitalParado, cobertura, diasSem, status };
+      if      (l.estoque === 0 && l.v30 > 0)        status = 'ruptura';
+      else if (l.estoque > 0 && l.estoque < l.min)  status = 'critico';
+      else if (diasSem > 90 && l.estoque > 0)        status = 'parado';
+      else if (cobertura > 120)                       status = 'excesso';
+      else if (cobertura < 15 && l.v30 > 0)          status = 'reposicao';
+      return { ...l, fat30, capParado, cobertura, diasSem, status, tend };
     });
 
     // Curva ABC
-    const totalFat = processados.reduce((s,p) => s + p.fat30, 0);
-    const sorted = [...processados].sort((a,b) => b.fat30 - a.fat30);
+    const totalFat = proc.reduce((s,p) => s+p.fat30, 0);
+    const sorted   = [...proc].sort((a,b) => b.fat30-a.fat30);
     let acum = 0;
-    sorted.forEach(p => {
-      acum += p.fat30;
-      p._abc = totalFat > 0 ? (acum/totalFat <= 0.7 ? 'A' : acum/totalFat <= 0.9 ? 'B' : 'C') : 'C';
-    });
-    processados.forEach(p => {
-      const match = sorted.find(s => s.sku === p.sku && s.produto === p.produto);
-      if (match) p._abc = match._abc;
-    });
-    linhas.forEach((l, i) => { l._abc = processados[i]._abc; });
-
-    // Resumo
-    const rupturas = processados.filter(p => p.status === 'ruptura');
-    const criticos = processados.filter(p => p.status === 'critico');
-    const parados = processados.filter(p => p.status === 'parado');
-    const excessos = processados.filter(p => p.status === 'excesso');
-    const reposicoes = processados.filter(p => p.status === 'reposicao');
-    const curvaA = processados.filter(p => p._abc === 'A');
-    const totalCapParado = processados.reduce((s,p) => s + p.capitalParado, 0);
-    const totalFat30 = processados.reduce((s,p) => s + p.fat30, 0);
-
-    // Atualizar KPIs
-    document.getElementById('k-total').textContent = processados.length;
-    document.getElementById('k-fat').textContent = 'R$ ' + totalFat30.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
-    document.getElementById('k-parado').textContent = 'R$ ' + totalCapParado.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
-    document.getElementById('k-rupt').textContent = rupturas.length;
-
-    // Alertas
-    const alertas = [];
-    rupturas.forEach(p => alertas.push({ tipo:'ruptura', nome:p.produto, desc:`Sem estoque — ${p.v30} vendas nos últimos 30 dias. Prejuízo diário: ~R$ ${(p.venda * p.v30/30).toFixed(0)}.` }));
-    criticos.forEach(p => alertas.push({ tipo:'critico', nome:p.produto, desc:`${p.estoque} unidades — abaixo do mínimo de ${p.min}. Cobertura de apenas ${p.cobertura} dias.` }));
-    reposicoes.forEach(p => alertas.push({ tipo:'reposicao', nome:p.produto, desc:`Apenas ${p.cobertura} dias de estoque. Repor urgente antes de acabar.` }));
-    parados.forEach(p => alertas.push({ tipo:'parado', nome:p.produto, desc:`${p.diasSem} dias sem venda. Capital imobilizado: R$ ${p.capitalParado.toFixed(0)}.` }));
-    excessos.forEach(p => alertas.push({ tipo:'excesso', nome:p.produto, desc:`Cobertura de ${p.cobertura} dias (${Math.round(p.cobertura/30)} meses). Avaliar promoção.` }));
-
-    if (alertas.length > 0) {
-      document.getElementById('panelAlertas').style.display = 'block';
-      document.getElementById('alertasCount').textContent = `${alertas.length} item${alertas.length > 1 ? 's' : ''} precisam de atenção`;
-      document.getElementById('alertasList').innerHTML = alertas.map(a => `
-        <div class="alerta-item ${a.tipo}">
-          <div class="alerta-dot"></div>
-          <div><div class="alerta-nome">${a.nome}</div><div class="alerta-desc">${a.desc}</div></div>
-        </div>`).join('');
-    }
-
-    // Gerar relatório WhatsApp
-    const linhaRupt = rupturas.length > 0 ? `🔴 *Ruptura de estoque:* ${rupturas.map(p=>p.produto).join(', ')}\n` : '';
-    const linhaCrit = criticos.length > 0 ? `🟠 *Estoque crítico:* ${criticos.map(p=>`${p.produto} (${p.estoque} un)`).join(', ')}\n` : '';
-    const linhaRep = reposicoes.length > 0 ? `🟡 *Reposição urgente:* ${reposicoes.length} produto(s)\n` : '';
-    const linhaParado = parados.length > 0 ? `📦 *Capital parado:* R$ ${totalCapParado.toFixed(0)} em ${parados.length} produto(s)\n` : '';
-
-    // Recomendações automáticas
-    const recsImediatas = [];
-    const recsSemana = [];
-    const recsOportunidade = [];
-    if (rupturas.length > 0) recsImediatas.push(`Repor *${rupturas[0].produto}* com urgência — demanda ativa, estoque zerado.`);
-    if (criticos.length > 0) recsImediatas.push(`*${criticos[0].produto}* abaixo do mínimo: ${criticos[0].estoque} un. Pedir ainda hoje.`);
-    if (reposicoes.length > 0) recsSemana.push(`*${reposicoes[0].produto}* com ${reposicoes[0].cobertura} dias de cobertura — pedir esta semana.`);
-    if (parados.length > 0) recsSemana.push(`Avaliar promoção em ${parados.length} produto(s) parado(s) — libera R$ ${totalCapParado.toFixed(0)} de capital.`);
-    if (curvaA.length > 0) recsOportunidade.push(`${curvaA.length} produtos Curva A respondem por 70% do faturamento — manter estoque protegido.`);
-
-    const secImediata = recsImediatas.length > 0 ? `*AÇÃO IMEDIATA*\n${recsImediatas.map(r=>`• ${r}`).join('\n')}\n\n` : '';
-    const secSemana = recsSemana.length > 0 ? `*ESTA SEMANA*\n${recsSemana.map(r=>`• ${r}`).join('\n')}\n\n` : '';
-    const secOport = recsOportunidade.length > 0 ? `*OPORTUNIDADE*\n${recsOportunidade.map(r=>`• ${r}`).join('\n')}\n` : '';
-
-    const alertasSem = rupturas.length === 0 && criticos.length === 0 && parados.length === 0 && reposicoes.length === 0;
-    const textoSemAlerta = alertasSem ? '✅ Nenhum alerta crítico esta semana. Estoque equilibrado.\n\n' : '';
-
-    relatorioGerado = `🔄 *GIRO — Relatório de Estoque*\n📅 ${dataStr}\n\n━━━━━━━━━━━━━━━━━━━━\n📊 *PAINEL RÁPIDO*\n\nProdutos analisados: ${processados.length}\nFaturamento (30 dias): R$ ${totalFat30.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}\nCapital parado: R$ ${totalCapParado.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}\n\n${linhaRupt}${linhaCrit}${linhaRep}${linhaParado}\n━━━━━━━━━━━━━━━━━━━━\n🤖 *ANÁLISE E RECOMENDAÇÕES*\n\n${textoSemAlerta}${secImediata}${secSemana}${secOport}\n━━━━━━━━━━━━━━━━━━━━\n_Relatório gerado pelo GIRO · ELEVARIA_`;
-
-    document.getElementById('waBubble').textContent = relatorioGerado;
-    document.getElementById('waTime').textContent = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-    document.getElementById('waTime').style.opacity = '1';
-
-    // WhatsApp share
-    const waUrl = `https://wa.me/5531991876584?text=${encodeURIComponent(relatorioGerado)}`;
-    document.getElementById('btnWa').href = waUrl;
-    document.getElementById('shareArea').style.display = 'block';
-
-    renderTabela(true);
-
-    btn.classList.remove('loading');
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 8l4 4 8-8"/></svg> Análise concluída`;
-    btn.style.background = '#2a6e27';
-    setTimeout(() => {
-      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v12M3 7l5-5 5 5"/></svg> Rodar Análise`;
-      btn.style.background = '';
-    }, 2500);
-
-    document.getElementById('panelAlertas').scrollIntoView({ behavior:'smooth', block:'nearest' });
-  }, 900);
-}
-
-function copiarRelatorio() {
-  if (!relatorioGerado) return;
-  navigator.clipboard.writeText(relatorioGerado).then(() => {
-    const btn = document.querySelector('.btn-copy');
-    const orig = btn.innerHTML;
-    btn.innerHTML = '✓ Copiado!';
-    btn.style.color = '#7bbf78';
-    setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 2000);
-  });
-}
-
-// CSS para spinner
-const style = document.createElement('style');
-style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
-document.head.appendChild(style);
-
-// Init
-renderTabela();
-</script>
-</body>
-</html>
+    sorted.forEach(p => { acum += p.fat30; p._abc = totalFat > 0 ? (acum/totalFat <= 0.7?'A':acum/totalFat<=0.9?'B':'C') : 'C'; });
+    proc.forEach(p => { const m = sorted.find(s=>s.
