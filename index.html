@@ -374,20 +374,15 @@
       gap: 1rem;
     }
 
-    #hero .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-    }
-
     .hero-stats {
-      flex-shrink: 0;
+      position: absolute;
+      right: clamp(1.5rem, 5vw, 4rem);
+      top: 50%;
+      transform: translateY(-55%);
+      z-index: 2;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-      z-index: 2;
-      padding-left: 3rem;
     }
 
     .stat-item { text-align: right; }
@@ -1377,3 +1372,11 @@
           closeMobileMenu();
           const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
           window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+         
